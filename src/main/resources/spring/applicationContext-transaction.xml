@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans  http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<bean class="org.springframework.jdbc.datasource.DataSourceTransactionManager" id="transactionManager">
+		<property name="dataSource" ref="druidDataSource"/>
+	</bean>
+	
+	<tx:advice transaction-manager="dataSourceTransactionManager" id="transactionInterceptor">
+		<tx:attributes>
+			<tx:method name="query" read-only="true"/>
+			<tx:method name="*"/>
+		</tx:attributes>
+	</tx:advice>
+	
+	<tx:annotation-driven transaction-manager="dataSourceTransactionManager"/>
+	
+	<aop:config>
+		<aop:pointcut id="pointcut" expression="execution(* com.light.service.*.*(..))"/>
+		<aop:advisor advice-ref="transactionInterceptor" pointcut-ref="pointcut"/>
+	</aop:config>
+	
+</beans>
