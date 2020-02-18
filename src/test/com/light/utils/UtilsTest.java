@@ -2,8 +2,6 @@ package com.light.graduation.utils;
 
 import com.baidu.aip.face.AipFace;
 import com.baidu.aip.face.MatchRequest;
-import com.light.graduation.entity.Student;
-import com.light.graduation.face.BaiDuOnlineFaceService;
 import org.json.JSONObject;
 import org.junit.Test;
 

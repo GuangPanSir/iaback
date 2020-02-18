@@ -1,7 +1,5 @@
 package com.light.graduation.converters;
 
-import com.light.usermanage.DTO.UpdateUserDTO;
-import com.light.usermanage.pojo.User;
 import org.springframework.beans.BeanUtils;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.util.StringUtils;
@@ -10,6 +8,7 @@ import org.springframework.util.StringUtils;
  * @Author: Light
  * @Date 2020/2/10 23:33
  */
+/*
 public class UpdateUserDtoToUserConverter implements Converter< UpdateUserDTO, User > {
 	@Override
 	public User convert ( UpdateUserDTO updateUserDTO ) {
@@ -27,3 +26,4 @@ public class UpdateUserDtoToUserConverter implements Converter< UpdateUserDTO, U
 		return null;
 	}
 }
+*/

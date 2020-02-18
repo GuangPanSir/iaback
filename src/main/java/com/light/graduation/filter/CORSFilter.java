@@ -1,6 +1,7 @@
 package com.light.graduation.filter;
 
 import org.jetbrains.annotations.NotNull;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +12,7 @@ import java.io.IOException;
  * @Author: Light
  * @Date 2020/2/16 13:10
  */
+@Component
 public class CORSFilter implements Filter {
 	private Boolean isCross = false;
 	

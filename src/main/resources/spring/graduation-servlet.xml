@@ -9,12 +9,6 @@
 	<!--扫描控制层组件-->
 	<context:component-scan base-package="com.light.graduation.controller"/>
 	
-	<!--配置视图解析器-->
-	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix" value="/WEB-INF/views/"/>
-		<property name="suffix" value=".jsp"/>
-	</bean>
-	
 	<!--默认的servlet-->
 	<mvc:default-servlet-handler/>
 	
@@ -25,5 +19,11 @@
 	<mvc:cors>
 		<mvc:mapping path="/**" allowed-origins="*" allowed-methods="*" allowed-headers="*" allow-credentials="true"/>
 	</mvc:cors>
-
+	
+	<!--配置视图解析器-->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/"/>
+		<property name="suffix" value=".jsp"/>
+	</bean>
+	
 </beans>

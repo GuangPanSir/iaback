@@ -18,7 +18,7 @@
 	<tx:annotation-driven transaction-manager="dataSourceTransactionManager"/>
 	
 	<aop:config>
-		<aop:pointcut id="pointcut" expression="execution(* com.light.service.*.*(..))"/>
+		<aop:pointcut id="pointcut" expression="execution(* com.light.graduation.service.*.*(..))"/>
 		<aop:advisor advice-ref="transactionInterceptor" pointcut-ref="pointcut"/>
 	</aop:config>
 	
