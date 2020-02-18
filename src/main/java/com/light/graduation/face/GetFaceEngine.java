@@ -1,4 +1,4 @@
-package com.light.face;
+package com.light.graduation.face;
 
 import com.arcsoft.face.ActiveFileInfo;
 import com.arcsoft.face.EngineConfiguration;

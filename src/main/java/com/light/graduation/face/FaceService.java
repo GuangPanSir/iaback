@@ -1,4 +1,4 @@
-package com.light.face;
+package com.light.graduation.face;
 
 import com.arcsoft.face.FaceFeature;
 import com.arcsoft.face.FaceInfo;

@@ -1,8 +1,8 @@
-package com.light.face;
+package com.light.graduation.face;
 
 import com.baidu.aip.face.AipFace;
-import com.light.entity.Student;
-import com.light.utils.GetFaceClient;
+import com.light.graduation.entity.Student;
+import com.light.graduation.utils.GetFaceClient;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 

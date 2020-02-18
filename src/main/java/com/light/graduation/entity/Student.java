@@ -1,4 +1,4 @@
-package com.light.entity;
+package com.light.graduation.entity;
 
 import lombok.Data;
 import org.jetbrains.annotations.Contract;

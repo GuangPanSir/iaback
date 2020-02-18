@@ -1,13 +1,13 @@
-package com.light.face.faceserviceimpl;
+package com.light.graduation.face.faceserviceimpl;
 
 import com.arcsoft.face.FaceEngine;
 import com.arcsoft.face.FaceFeature;
 import com.arcsoft.face.FaceInfo;
 import com.arcsoft.face.FaceSimilar;
 import com.arcsoft.face.toolkit.ImageInfo;
-import com.light.face.FaceService;
-import com.light.face.GetFaceEngine;
-import com.light.utils.ImageConvertUtils;
+import com.light.graduation.face.FaceService;
+import com.light.graduation.face.GetFaceEngine;
+import com.light.graduation.utils.ImageConvertUtils;
 import lombok.Data;
 import org.jetbrains.annotations.NotNull;
 

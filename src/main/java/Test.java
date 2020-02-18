@@ -1,7 +1,7 @@
 import com.arcsoft.face.FaceFeature;
 import com.arcsoft.face.FaceSimilar;
-import com.light.face.faceserviceimpl.FaceServiceImpl;
-import com.light.utils.ImageConvertUtils;
+import com.light.graduation.face.faceserviceimpl.FaceServiceImpl;
+import com.light.graduation.utils.ImageConvertUtils;
 
 import static com.arcsoft.face.toolkit.ImageFactory.getRGBData;
 

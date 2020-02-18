@@ -1,4 +1,4 @@
-package com.light.utils;
+package com.light.graduation.utils;
 
 import com.baidu.aip.face.AipFace;
 import org.jetbrains.annotations.NotNull;

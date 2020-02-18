@@ -1,13 +1,13 @@
-package com.light.location;
+package com.light.graduation.location;
 
 import com.baidubce.services.dumap.DuMapClient;
 import com.baidubce.services.dumap.model.IPLocationParam;
-import com.light.utils.GetLocationClient;
+import com.light.graduation.utils.GetLocationClient;
 import lombok.SneakyThrows;
 import org.jetbrains.annotations.NotNull;
 
-import static com.light.utils.GetLocationClient.APP_ID;
-import static com.light.utils.UnicodeToUtf8.*;
+import static com.light.graduation.utils.GetLocationClient.APP_ID;
+import static com.light.graduation.utils.UnicodeToUtf8.*;
 
 /**
  * @Author: Light

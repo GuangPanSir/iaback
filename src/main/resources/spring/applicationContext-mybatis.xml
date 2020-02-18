@@ -9,7 +9,7 @@
 		<!--配置mybatis核心配置文件-->
 		<property name="configLocation" value="classpath:./mybatis/mybatis-config.xml"/>
 		<!--设置类型别名-->
-		<property name="typeAliasesPackage" value="com.light.entity"/>
+		<property name="typeAliasesPackage" value="com.light.graduation.entity"/>
 		<!--设置映射文件路径-->
 		<property name="mapperLocations" value="classpath:./mybatis/dao/*.xml"/>
 		<!--加入数据源-->
@@ -18,9 +18,9 @@
 	
 	<!--接口自动生成代理实现类，并由spring管理-->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.light.dao"/>
+		<property name="basePackage" value="com.light.graduation.dao"/>
 	</bean>
 	
-	<mybatis-spring:scan base-package="com.light.dao"/>
+	<mybatis-spring:scan base-package="com.light.graduation.dao"/>
 	
 </beans>

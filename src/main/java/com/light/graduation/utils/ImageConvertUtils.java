@@ -1,4 +1,4 @@
-package com.light.utils;
+package com.light.graduation.utils;
 
 import org.apache.commons.codec.binary.Base64;
 import org.jetbrains.annotations.Contract;
