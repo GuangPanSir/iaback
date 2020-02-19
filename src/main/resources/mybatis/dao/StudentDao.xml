@@ -11,9 +11,8 @@
 		<result column="absentTimes" jdbcType="INTEGER" property="absentTimes"/>
 	</resultMap>
 	<sql id="Base_Column_List">
-    studentNumber, studentPassword, studentSex, studentFaceImage, studentName, overdueTimes, 
-    absentTimes
-  </sql>
+   			studentNumber, studentPassword, studentSex, studentFaceImage, studentName, overdueTimes, absentTimes
+  		</sql>
 	<select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List"/>
@@ -21,12 +20,16 @@
 		where studentNumber = #{studentNumber,jdbcType=VARCHAR}
 	</select>
 	<select id="selectAllStudents" resultType="com.light.graduation.entity.Student">
-		select * from studentinfo
+			select * from studentinfo
+		</select>
+	<select id="getStudentFaceImage" resultType="java.lang.String">
+		select studentinfo.studentFaceImage from studentinfo
+		where studentNumber = #{studentNumber,jdbcType=VARCHAR}
 	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from studentinfo
-    where studentNumber = #{studentNumber,jdbcType=VARCHAR}
-  </delete>
+    	delete from studentinfo
+    	where studentNumber = #{studentNumber,jdbcType=VARCHAR}
+  	</delete>
 	<insert id="insert" keyColumn="studentNumber" keyProperty="studentNumber"
 			parameterType="com.light.graduation.entity.Student" useGeneratedKeys="true">
     insert into studentinfo (studentPassword, studentSex, studentFaceImage, 
@@ -35,7 +38,7 @@
     values (#{studentPassword,jdbcType=VARCHAR}, #{studentSex,jdbcType=VARCHAR}, #{studentFaceImage,jdbcType=VARCHAR}, 
       #{studentName,jdbcType=VARCHAR}, #{overdueTimes,jdbcType=INTEGER}, #{absentTimes,jdbcType=INTEGER}
       )
-  </insert>
+  	</insert>
 	<insert id="insertSelective" keyColumn="studentNumber" keyProperty="studentNumber"
 			parameterType="com.light.graduation.entity.Student" useGeneratedKeys="true">
 		insert into studentinfo

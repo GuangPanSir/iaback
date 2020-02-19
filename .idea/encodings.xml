@@ -2,17 +2,16 @@
 <project version="4">
   <component name="Encoding" native2AsciiForPropertiesFiles="true" defaultCharsetForPropertiesFiles="UTF-8">
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/img/01.jpg" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/img/03.jpg" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/img/QQ截图20190518154745.jpg" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/img/作为怪物.jpg" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/img/刘亦菲01.jpg" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/img/刘亦菲02.jpg" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/img/刘亦菲03.jpg" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/img/潘光健01.jpg" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/img/潘光健02.jpg" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/img/潘光健03.jpg" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/light/graduation/face/FaceTest.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/img/01.jpg" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/img/03.jpg" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/img/QQ截图20190518154745.jpg" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/img/刘亦菲01.jpg" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/img/刘亦菲02.jpg" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/img/刘亦菲03.jpg" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/img/潘光健01.jpg" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/img/潘光健02.jpg" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/img/潘光健03.jpg" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/webapp/js/jquery-3.4.1.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/webapp/js/jquery-3.4.1.min.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/webapp/js/js_sdk.js" charset="UTF-8" />

@@ -131,13 +131,13 @@ public class FaceServiceImpl implements FaceService {
 		return faceServiceImpl01.faceCompare ( faceFeature02 , new FaceSimilar ( ) );
 	}
 	
+	@Override
 	public void updateStudentImage ( Student student ) {
 		this.studentDao.updateByPrimaryKeySelective ( student );
 	}
 	
 	@Override
-	public List<Student> selectAll ( ) {
-		return this.studentDao.selectAllStudents ( );
+	public String getStudentFaceImage ( String studentNumber ) {
+		return this.studentDao.getStudentFaceImage ( studentNumber );
 	}
-	
 }

@@ -66,5 +66,7 @@ public interface FaceService {
 	 */
 	boolean faceCompare ( String targetImgStr , String sourceImgStr );
 	
-	List< Student > selectAll ( );
+	void updateStudentImage ( Student student );
+	
+	String getStudentFaceImage ( String studentNumber );
 }

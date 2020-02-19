@@ -18,4 +18,6 @@ public interface StudentDao {
     int updateByPrimaryKey( Student record);
 	
 	List< Student > selectAllStudents ( );
+	
+	String getStudentFaceImage ( String studentNumber );
 }
