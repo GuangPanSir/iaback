@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.light.graduation.dao.StudentDao">
+	<resultMap id="BaseResultMap" type="com.light.graduation.entity.Student">
+		<id column="studentNumber" jdbcType="VARCHAR" property="studentNumber"/>
+		<result column="studentPassword" jdbcType="VARCHAR" property="studentPassword"/>
+		<result column="studentSex" jdbcType="VARCHAR" property="studentSex"/>
+		<result column="studentFaceImage" jdbcType="VARCHAR" property="studentFaceImage"/>
+		<result column="studentName" jdbcType="VARCHAR" property="studentName"/>
+		<result column="overdueTimes" jdbcType="INTEGER" property="overdueTimes"/>
+		<result column="absentTimes" jdbcType="INTEGER" property="absentTimes"/>
+	</resultMap>
+	<sql id="Base_Column_List">
+    studentNumber, studentPassword, studentSex, studentFaceImage, studentName, overdueTimes, 
+    absentTimes
+  </sql>
+	<select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List"/>
+		from studentinfo
+		where studentNumber = #{studentNumber,jdbcType=VARCHAR}
+	</select>
+	<select id="selectAllStudents" resultType="com.light.graduation.entity.Student">
+		select * from studentinfo
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from studentinfo
+    where studentNumber = #{studentNumber,jdbcType=VARCHAR}
+  </delete>
+	<insert id="insert" keyColumn="studentNumber" keyProperty="studentNumber"
+			parameterType="com.light.graduation.entity.Student" useGeneratedKeys="true">
+    insert into studentinfo (studentPassword, studentSex, studentFaceImage, 
+      studentName, overdueTimes, absentTimes
+      )
+    values (#{studentPassword,jdbcType=VARCHAR}, #{studentSex,jdbcType=VARCHAR}, #{studentFaceImage,jdbcType=VARCHAR}, 
+      #{studentName,jdbcType=VARCHAR}, #{overdueTimes,jdbcType=INTEGER}, #{absentTimes,jdbcType=INTEGER}
+      )
+  </insert>
+	<insert id="insertSelective" keyColumn="studentNumber" keyProperty="studentNumber"
+			parameterType="com.light.graduation.entity.Student" useGeneratedKeys="true">
+		insert into studentinfo
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="studentPassword != null">
+				studentPassword,
+			</if>
+			<if test="studentSex != null">
+				studentSex,
+			</if>
+			<if test="studentFaceImage != null">
+				studentFaceImage,
+			</if>
+			<if test="studentName != null">
+				studentName,
+			</if>
+			<if test="overdueTimes != null">
+				overdueTimes,
+			</if>
+			<if test="absentTimes != null">
+				absentTimes,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="studentPassword != null">
+				#{studentPassword,jdbcType=VARCHAR},
+			</if>
+			<if test="studentSex != null">
+				#{studentSex,jdbcType=VARCHAR},
+			</if>
+			<if test="studentFaceImage != null">
+				#{studentFaceImage,jdbcType=VARCHAR},
+			</if>
+			<if test="studentName != null">
+				#{studentName,jdbcType=VARCHAR},
+			</if>
+			<if test="overdueTimes != null">
+				#{overdueTimes,jdbcType=INTEGER},
+			</if>
+			<if test="absentTimes != null">
+				#{absentTimes,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.light.graduation.entity.Student">
+		update studentinfo
+		<set>
+			<if test="studentPassword != null">
+				studentPassword = #{studentPassword,jdbcType=VARCHAR},
+			</if>
+			<if test="studentSex != null">
+				studentSex = #{studentSex,jdbcType=VARCHAR},
+			</if>
+			<if test="studentFaceImage != null">
+				studentFaceImage = #{studentFaceImage,jdbcType=VARCHAR},
+			</if>
+			<if test="studentName != null">
+				studentName = #{studentName,jdbcType=VARCHAR},
+			</if>
+			<if test="overdueTimes != null">
+				overdueTimes = #{overdueTimes,jdbcType=INTEGER},
+			</if>
+			<if test="absentTimes != null">
+				absentTimes = #{absentTimes,jdbcType=INTEGER},
+			</if>
+		</set>
+		where studentNumber = #{studentNumber,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.light.graduation.entity.Student">
+    update studentinfo
+    set studentPassword = #{studentPassword,jdbcType=VARCHAR},
+      studentSex = #{studentSex,jdbcType=VARCHAR},
+      studentFaceImage = #{studentFaceImage,jdbcType=VARCHAR},
+      studentName = #{studentName,jdbcType=VARCHAR},
+      overdueTimes = #{overdueTimes,jdbcType=INTEGER},
+      absentTimes = #{absentTimes,jdbcType=INTEGER}
+    where studentNumber = #{studentNumber,jdbcType=VARCHAR}
+  </update>
+</mapper>

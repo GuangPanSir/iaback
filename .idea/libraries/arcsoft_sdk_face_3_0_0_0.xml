@@ -4,6 +4,9 @@
       <root url="jar://E:/Chorme/ArcSoft_ArcFace_Java_Windows_x64_V3.0/libs/arcsoft-sdk-face-3.0.0.0.jar!/" />
     </CLASSES>
     <JAVADOC />
+    <NATIVE>
+      <root url="file://E:/Chorme/ArcSoft_ArcFace_Java_Windows_x64_V3.0/libs/WIN64" />
+    </NATIVE>
     <SOURCES>
       <root url="jar://E:/Chorme/ArcSoft_ArcFace_Java_Windows_x64_V3.0/libs/arcsoft-sdk-face-3.0.0.0.jar!/" />
     </SOURCES>

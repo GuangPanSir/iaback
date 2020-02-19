@@ -1,8 +1,9 @@
-package com.light.graduation.face;
+package com.light.graduation.service.faceservice;
 
 import com.arcsoft.face.FaceFeature;
 import com.arcsoft.face.FaceInfo;
 import com.arcsoft.face.FaceSimilar;
+import com.light.graduation.entity.Student;
 
 import java.util.List;
 
@@ -57,5 +58,13 @@ public interface FaceService {
 	 */
 	boolean faceCompare( FaceFeature targetFaceFeature, FaceSimilar faceSimilar );
 	
+	/**
+	 * 返回人脸相似程度
+	 * @param targetImgStr 第一张图片的编码
+	 * @param sourceImgStr	第二张图片的编码
+	 * @return 在一定的误差内，人脸是否相似
+	 */
+	boolean faceCompare ( String targetImgStr , String sourceImgStr );
 	
+	List< Student > selectAll ( );
 }
