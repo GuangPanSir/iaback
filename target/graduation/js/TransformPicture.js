@@ -37,7 +37,7 @@ function CatchCode() {
     $.ajax({
         type : "POST",
         async : false,
-        url : "/Parking/faceLogin/searchFace",
+        url : "/face/check",
         data : {
             img : img
         },
