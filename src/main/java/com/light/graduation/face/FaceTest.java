@@ -2,9 +2,11 @@ package com.light.graduation.face;
 
 import com.arcsoft.face.*;
 import com.arcsoft.face.enums.DetectMode;
+import com.arcsoft.face.enums.DetectModel;
 import com.arcsoft.face.enums.DetectOrient;
 import com.arcsoft.face.enums.ErrorInfo;
 import com.arcsoft.face.toolkit.ImageInfo;
+import com.arcsoft.face.toolkit.ImageInfoEx;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -66,7 +68,7 @@ public class FaceTest {
 		
 		
 		//人脸检测
-		ImageInfo imageInfo = getRGBData ( new File ( "img\\潘光健01.jpg" ) );
+		ImageInfo imageInfo = getRGBData ( new File ( "E:\\IACoding\\graduation\\src\\main\\resources\\img\\潘光健01.jpg" ) );
 		if ( imageInfo == null ) {
 			System.out.println ( "图片错误" );
 		}
@@ -84,7 +86,7 @@ public class FaceTest {
 		System.out.println ( "潘光健01特征值大小：" + faceFeature.getFeatureData ( ) );
 		
 		//人脸检测2
-		ImageInfo imageInfo2 = getRGBData ( new File ( "img\\潘光健02.jpg" ) );
+		ImageInfo imageInfo2 = getRGBData ( new File ( "E:\\IACoding\\graduation\\src\\main\\resources\\img\\潘光健01.jpg" ) );
 		List< FaceInfo > faceInfoList2 = new ArrayList< FaceInfo > ( );
 		errorCode = faceEngine.detectFaces ( imageInfo2.getImageData ( ) , imageInfo2.getWidth ( ) , imageInfo2.getHeight ( ) , imageInfo.getImageFormat ( ) , faceInfoList2 );
 		System.out.println ( faceInfoList2 );
@@ -106,7 +108,6 @@ public class FaceTest {
 		System.out.println ( "潘光健01与潘光健02相似度：" + faceSimilar.getScore ( ) );
 		System.out.println (targetFaceFeature);
 		System.out.println (sourceFaceFeature );
-/*
 		//设置活体测试
 		errorCode = faceEngine.setLivenessParam ( 0.5f , 0.7f );
 		//人脸属性检测
@@ -140,7 +141,7 @@ public class FaceTest {
 		
 		
 		//IR属性处理
-		ImageInfo imageInfoGray = getGrayData ( new File ( "img\\潘光健01.jpg" ) );
+		ImageInfo imageInfoGray = getGrayData ( new File ( "E:\\IACoding\\graduation\\src\\main\\resources\\img\\潘光健01.jpg" ) );
 		List< FaceInfo > faceInfoListGray = new ArrayList< FaceInfo > ( );
 		errorCode = faceEngine.detectFaces ( imageInfoGray.getImageData ( ) , imageInfoGray.getWidth ( ) , imageInfoGray.getHeight ( ) , imageInfoGray.getImageFormat ( ) , faceInfoListGray );
 		
@@ -170,7 +171,6 @@ public class FaceTest {
 		
 		FaceFeature feature = new FaceFeature ( );
 		errorCode = faceEngine.extractFaceFeature ( imageInfoEx , faceInfoList1.get ( 0 ) , feature );
-		*/
 		//引擎卸载
 		errorCode = faceEngine.unInit ( );
 		

@@ -1,5 +1,7 @@
 package com.light.graduation.service.studentservice;
 
+import com.light.graduation.dto.CheckLoginDTO;
+import com.light.graduation.dto.StudentClockInformationDTO;
 import com.light.graduation.entity.Student;
 
 import java.util.List;
@@ -13,4 +15,9 @@ public interface StudentService {
 	
 	List< Student > selectAllStudents ( );
 	
+	boolean checkStudentLogin ( CheckLoginDTO loginUser );
+	
+	List< StudentClockInformationDTO > getStudentClockInformation ( String studentNumber );
+	
+	String getStudentMajor ( String studentNumber );
 }

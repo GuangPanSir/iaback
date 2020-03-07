@@ -29,7 +29,7 @@ public class CORSFilter implements Filter {
 			HttpServletRequest httpServletRequest = ( HttpServletRequest ) servletRequest;
 			HttpServletResponse httpServletResponse = ( HttpServletResponse ) servletResponse;
 			System.out.println ( "拦截请求" + httpServletRequest.getServletPath ( ) );
-			httpServletResponse.setHeader ( "Access-Control-Allow-Origin" , "*" );
+			httpServletResponse.setHeader ( "Access-Control-Allow-Origin" , httpServletRequest.getHeader("Origin") );
 			httpServletResponse.setHeader ( "Access-Control-Allow-Methods" , "POST,GET,OPTIONS,DELETE,PUT" );
 			httpServletResponse.setHeader("Access-Control-Max-Age", "0");
 			httpServletResponse.setHeader("Access-Control-Allow-Headers",

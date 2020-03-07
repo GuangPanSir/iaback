@@ -21,6 +21,15 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	
+	<filter>
+		<filter-name>FormContentFilter</filter-name>
+		<filter-class>org.springframework.web.filter.FormContentFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>FormContentFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
 	<!--隐藏提交方式，使用post方法提交，表单中加入字段：_method  加哟提交的方法		模拟请求方式-->
 	<filter>
 		<filter-name>HiddenHttpMethodFilter</filter-name>

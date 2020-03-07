@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.light.graduation.dao.StudentClockInDao">
+	<resultMap id="BaseResultMap" type="com.light.graduation.entity.StudentClockIn">
+		<result column="studentNumber" jdbcType="VARCHAR" property="studentNumber"/>
+		<result column="clockInTeacherNumber" jdbcType="VARCHAR" property="clockInTeacherNumber"/>
+		<result column="clockInProject" jdbcType="VARCHAR" property="clockInProject"/>
+		<result column="clockTime" jdbcType="TIMESTAMP" property="clockTime"/>
+		<result column="clockLocation" jdbcType="VARCHAR" property="clockLocation"/>
+		<result column="clockState" jdbcType="VARCHAR" property="clockState"/>
+		<result column="errorReason" jdbcType="VARCHAR" property="errorReason"/>
+		<result column="certification" jdbcType="VARCHAR" property="certification"/>
+	</resultMap>
+	<insert id="insert" parameterType="com.light.graduation.entity.StudentClockIn">
+    insert into studentclockin (studentNumber, clockInTeacherNumber, 
+      clockInProject, clockTime, clockLocation, 
+      clockState, errorReason, certification
+      )
+    values (#{studentNumber,jdbcType=VARCHAR}, #{clockInTeacherNumber,jdbcType=VARCHAR}, 
+      #{clockInProject,jdbcType=VARCHAR}, #{clockTime,jdbcType=TIMESTAMP}, #{clockLocation,jdbcType=VARCHAR}, 
+      #{clockState,jdbcType=VARCHAR}, #{errorReason,jdbcType=VARCHAR}, #{certification,jdbcType=VARCHAR}
+      )
+  </insert>
+	<insert id="insertSelective" parameterType="com.light.graduation.entity.StudentClockIn">
+		insert into studentclockin
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="studentNumber != null">
+				studentNumber,
+			</if>
+			<if test="clockInTeacherNumber != null">
+				clockInTeacherNumber,
+			</if>
+			<if test="clockInProject != null">
+				clockInProject,
+			</if>
+			<if test="clockTime != null">
+				clockTime,
+			</if>
+			<if test="clockLocation != null">
+				clockLocation,
+			</if>
+			<if test="clockState != null">
+				clockState,
+			</if>
+			<if test="errorReason != null">
+				errorReason,
+			</if>
+			<if test="certification != null">
+				certification,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="studentNumber != null">
+				#{studentNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="clockInTeacherNumber != null">
+				#{clockInTeacherNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="clockInProject != null">
+				#{clockInProject,jdbcType=VARCHAR},
+			</if>
+			<if test="clockTime != null">
+				#{clockTime,jdbcType=VARCHAR},
+			</if>
+			<if test="clockLocation != null">
+				#{clockLocation,jdbcType=VARCHAR},
+			</if>
+			<if test="clockState != null">
+				#{clockState,jdbcType=VARCHAR},
+			</if>
+			<if test="errorReason != null">
+				#{errorReason,jdbcType=VARCHAR},
+			</if>
+			<if test="certification != null">
+				#{certification,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="getStudentClockInformation"
+		resultType="com.light.graduation.dto.StudentClockInformationDTO">
+		select clockInProject,clockTime,teacherinfo.teacherName,clockState,errorReason
+		from teacherinfo,studentclockin
+		where studentNumber = #{studentNumber,jdbcType=VARCHAR}
+		and clockInTeacherNumber = teacherinfo.teacherNumber
+	</select>
+</mapper>

@@ -1,11 +1,12 @@
 package com.light.graduation.entity;
 
-import java.io.Serializable;
 import lombok.Data;
-import org.springframework.stereotype.Repository;
+
+import java.io.Serializable;
 
 /**
- * @author Light
+ * studentinfo
+ * @author 
  */
 @Data
 public class Student implements Serializable {
@@ -15,9 +16,29 @@ public class Student implements Serializable {
     private String studentNumber;
 
     /**
+     * 学生姓名
+     */
+    private String studentName;
+
+    /**
      * 登录密码（默认为学号）
      */
     private String studentPassword;
+
+    /**
+     * 学生学院
+     */
+    private String studentCollege;
+
+    /**
+     * 学生专业
+     */
+    private String studentMajor;
+
+    /**
+     * 学生班级
+     */
+    private String studentClass;
 
     /**
      * 性别
@@ -30,11 +51,6 @@ public class Student implements Serializable {
     private String studentFaceImage;
 
     /**
-     * 学生姓名
-     */
-    private String studentName;
-
-    /**
      * 该学生迟到次数
      */
     private Integer overdueTimes;
@@ -43,6 +59,16 @@ public class Student implements Serializable {
      * 该学生缺席次数
      */
     private Integer absentTimes;
+
+    /**
+     * 学生联系方式
+     */
+    private String studentContact;
+
+    /**
+     * 学生邮箱
+     */
+    private String studentEMail;
 
     private static final long serialVersionUID = 1L;
 }

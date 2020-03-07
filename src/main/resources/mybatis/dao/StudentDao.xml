@@ -21,9 +21,18 @@
 	</select>
 	<select id="selectAllStudents" resultType="com.light.graduation.entity.Student">
 			select * from studentinfo
-		</select>
+	</select>
 	<select id="getStudentFaceImage" resultType="java.lang.String">
 		select studentinfo.studentFaceImage from studentinfo
+		where studentNumber = #{studentNumber,jdbcType=VARCHAR}
+	</select>
+	<select id="getStudentPassword" resultType="java.lang.String">
+		select studentinfo.studentPassword from studentinfo
+		where studentNumber = #{studentNumber,jdbcType=VARCHAR}
+	</select>
+	<select id="getStudentMajor" resultType="java.lang.String">
+		select studentinfo.studentMajor
+		from studentinfo
 		where studentNumber = #{studentNumber,jdbcType=VARCHAR}
 	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">

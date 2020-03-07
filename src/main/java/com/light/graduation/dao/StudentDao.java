@@ -7,17 +7,21 @@ import java.util.List;
 public interface StudentDao {
     int deleteByPrimaryKey(String studentNumber);
 
-    int insert( Student record);
+    int insert(Student record);
 
-    int insertSelective( Student record);
+    int insertSelective(Student record);
 
-    Student selectByPrimaryKey( String studentNumber);
+    Student selectByPrimaryKey(String studentNumber);
 
-    int updateByPrimaryKeySelective( Student record);
+    int updateByPrimaryKeySelective(Student record);
 
-    int updateByPrimaryKey( Student record);
+    int updateByPrimaryKey(Student record);
 	
 	List< Student > selectAllStudents ( );
 	
 	String getStudentFaceImage ( String studentNumber );
+	
+	String getStudentPassword ( String studentNumber );
+	
+	String getStudentMajor ( String studentNumber );
 }

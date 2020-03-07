@@ -12,10 +12,8 @@ import com.light.graduation.utils.GetFaceEngine;
 import com.light.graduation.utils.ImageConvertUtils;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -31,7 +29,6 @@ import static com.arcsoft.face.toolkit.ImageFactory.getRGBData;
 @NoArgsConstructor
 @Service
 public class FaceServiceImpl implements FaceService {
-	@Autowired
 	private StudentDao studentDao;
 	
 	/**
@@ -63,6 +60,11 @@ public class FaceServiceImpl implements FaceService {
 		this.imgStr = imgStr;
 	}
 	
+	@Autowired
+	public FaceServiceImpl ( StudentDao studentDao ) {
+		this.studentDao = studentDao;
+	}
+	
 	@Override
 	public boolean detectFaces (   ) {
 		//首先对标志位赋初值，图片中识别到人脸
@@ -80,8 +82,13 @@ public class FaceServiceImpl implements FaceService {
 	
 	@Override
 	public byte[] faceFeature (  ) {
-		faceInfoList = getFaceInfo (  );
-		faceEngine.extractFaceFeature ( imageInfo.getImageData ( ) , imageInfo.getWidth ( ) , imageInfo.getHeight ( ) , imageInfo.getImageFormat ( ) , faceInfoList.get ( 0 ) , faceFeature );
+		try {
+			faceInfoList = getFaceInfo (  );
+			faceEngine.extractFaceFeature ( imageInfo.getImageData ( ) , imageInfo.getWidth ( ) , imageInfo.getHeight ( ) , imageInfo.getImageFormat ( ) , faceInfoList.get ( 0 ) , faceFeature );
+		} catch ( Exception e ) {
+			//未检测到人脸
+			return null;
+		}
 		return faceFeature.getFeatureData ( );
 	}
 	
@@ -95,12 +102,16 @@ public class FaceServiceImpl implements FaceService {
 	public List< FaceInfo > getFaceInfo (   ) {
 		//首先对标志位赋初值，图片中识别到人脸
 		byte[] imageByte = ImageConvertUtils.base64String2ByteFun ( imgStr );
-		imageInfo = getRGBData ( imageByte );
-		if ( imageInfo == null ) {
-			System.out.println ( "图片错误" );
+		try {
+			imageInfo = getRGBData ( imageByte );
+			faceEngine.detectFaces ( imageInfo.getImageData ( ) , imageInfo.getWidth ( ) , imageInfo.getHeight ( ) , imageInfo.getImageFormat ( ) , faceInfoList );
+		} catch ( NullPointerException e ) {
+			//图片信息有误
+			return null;
 		}
-		faceEngine.detectFaces ( imageInfo.getImageData ( ) , imageInfo.getWidth ( ) , imageInfo.getHeight ( ) , imageInfo.getImageFormat ( ) , faceInfoList );
-		System.out.println ( imageInfo );
+		/*if ( imageInfo == null ) {
+			System.out.println ( "图片错误" );
+		}*/
 		return faceInfoList;
 	}
 	
@@ -125,7 +136,12 @@ public class FaceServiceImpl implements FaceService {
 	@Override
 	public boolean faceCompare ( String targetImgStr , String sourceImgStr ) {
 		FaceServiceImpl faceServiceImpl01 = new FaceServiceImpl (targetImgStr );
-		faceServiceImpl01.getFaceFeature (   );
+		try {
+			faceServiceImpl01.getFaceFeature (   );
+		} catch ( Exception e ) {
+			//未检测出人脸
+			return false;
+		}
 		FaceServiceImpl faceServiceImpl02 = new FaceServiceImpl ( sourceImgStr );
 		FaceFeature faceFeature02 = faceServiceImpl02.getFaceFeature (   );
 		return faceServiceImpl01.faceCompare ( faceFeature02 , new FaceSimilar ( ) );

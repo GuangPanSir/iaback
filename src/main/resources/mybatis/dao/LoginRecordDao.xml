@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.light.graduation.dao.LoginRecordDao">
+<resultMap id="BaseResultMap" type="com.light.graduation.entity.LoginRecord">
+	<result column="teacherNumber" jdbcType="VARCHAR" property="teacherNumber"/>
+	<result column="clockInMajor" jdbcType="VARCHAR" property="clockInMajor"/>
+	<result column="clockInStartTime" jdbcType="TIMESTAMP" property="clockInStartTime"/>
+	<result column="clockInEndTime" jdbcType="TIMESTAMP" property="clockInEndTime"/>
+	<result column="clockInAbsentTime" jdbcType="TIMESTAMP" property="clockInAbsentTime"/>
+	<result column="locationDifference" jdbcType="DOUBLE" property="locationDifference"/>
+	<result column="clockInNormal" jdbcType="INTEGER" property="clockInNormal"/>
+	<result column="clockInAbsent" jdbcType="INTEGER" property="clockInAbsent"/>
+	<result column="clockInOverdue" jdbcType="INTEGER" property="clockInOverdue"/>
+	<result column="clockInProject" jdbcType="VARCHAR" property="clockInProject"/>
+</resultMap>
+<insert id="insert" parameterType="com.light.graduation.entity.LoginRecord">
+    insert into loginrecord (teacherNumber, clockInMajor, clockInStartTime,
+      clockInEndTime, clockInAbsentTime,
+      locationDifference, clockInNormal, clockInAbsent,
+      clockInOverdue, clockInProject)
+    values (#{teacherNumber,jdbcType=VARCHAR}, #{clockInMajor,jdbcType=VARCHAR}, #{clockInStartTime,jdbcType=TIMESTAMP},
+      #{clockInEndTime,jdbcType=TIMESTAMP}, #{clockInAbsentTime,jdbcType=TIMESTAMP},
+      #{locationDifference,jdbcType=DOUBLE}, #{clockInNormal,jdbcType=INTEGER}, #{clockInAbsent,jdbcType=INTEGER},
+      #{clockInOverdue,jdbcType=INTEGER}, #{clockInProject,jdbcType=VARCHAR})
+  </insert>
+<insert id="insertSelective" parameterType="com.light.graduation.entity.LoginRecord">
+	insert into loginrecord
+	<trim prefix="(" suffix=")" suffixOverrides=",">
+		<if test="teacherNumber != null">
+			teacherNumber,
+		</if>
+		<if test="clockInMajor != null">
+			clockInMajor,
+		</if>
+		<if test="clockInStartTime != null">
+			clockInStartTime,
+		</if>
+		<if test="clockInEndTime != null">
+			clockInEndTime,
+		</if>
+		<if test="clockInAbsentTime != null">
+			clockInAbsentTime,
+		</if>
+		<if test="locationDifference != null">
+			locationDifference,
+		</if>
+		<if test="clockInNormal != null">
+			clockInNormal,
+		</if>
+		<if test="clockInAbsent != null">
+			clockInAbsent,
+		</if>
+		<if test="clockInOverdue != null">
+			clockInOverdue,
+		</if>
+		<if test="clockInProject != null">
+			clockInProject,
+		</if>
+	</trim>
+	<trim prefix="values (" suffix=")" suffixOverrides=",">
+		<if test="teacherNumber != null">
+			#{teacherNumber,jdbcType=VARCHAR},
+		</if>
+		<if test="clockInMajor != null">
+			#{clockInMajor,jdbcType=VARCHAR},
+		</if>
+		<if test="clockInStartTime != null">
+			#{clockInStartTime,jdbcType=TIMESTAMP},
+		</if>
+		<if test="clockInEndTime != null">
+			#{clockInEndTime,jdbcType=TIMESTAMP},
+		</if>
+		<if test="clockInAbsentTime != null">
+			#{clockInAbsentTime,jdbcType=TIMESTAMP},
+		</if>
+		<if test="locationDifference != null">
+			#{locationDifference,jdbcType=DOUBLE},
+		</if>
+		<if test="clockInNormal != null">
+			#{clockInNormal,jdbcType=INTEGER},
+		</if>
+		<if test="clockInAbsent != null">
+			#{clockInAbsent,jdbcType=INTEGER},
+		</if>
+		<if test="clockInOverdue != null">
+			#{clockInOverdue,jdbcType=INTEGER},
+		</if>
+		<if test="clockInProject != null">
+			#{clockInProject,jdbcType=VARCHAR},
+		</if>
+	</trim>
+</insert>
+	<select id="checkStudentClockSelect" resultType="com.light.graduation.entity.LoginRecord">
+		select *
+		from loginrecord
+		where clockInMajor = #{major,jdbcType=VARCHAR}
+		and clockInProject = #{project,jdbcType=VARCHAR}
+		and teacherNumber = (
+			select teacherNumber
+			from teacherinfo
+			where teacherName = #{teacher,jdbcType=VARCHAR})
+		order by clockInStartTime desc limit 1;
+	</select>
+</mapper>

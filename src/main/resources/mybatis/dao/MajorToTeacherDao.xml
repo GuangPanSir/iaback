@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.light.graduation.dao.MajorToTeacherDao">
+	<resultMap id="BaseResultMap" type="com.light.graduation.entity.MajorToTeacher">
+		<result column="teacherNumber" jdbcType="VARCHAR" property="teacherNumber"/>
+		<result column="teacherMajor" jdbcType="VARCHAR" property="teacherMajor"/>
+		<result column="teacherProject" jdbcType="VARCHAR" property="teacherProject"/>
+	</resultMap>
+	<insert id="insert" parameterType="com.light.graduation.entity.MajorToTeacher">
+    insert into majortoteacher (teacherNumber, teacherMajor, teacherProject
+      )
+    values (#{teacherNumber,jdbcType=VARCHAR}, #{teacherMajor,jdbcType=VARCHAR}, #{teacherProject,jdbcType=VARCHAR}
+      )
+  </insert>
+	<insert id="insertSelective" parameterType="com.light.graduation.entity.MajorToTeacher">
+		insert into majortoteacher
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="teacherNumber != null">
+				teacherNumber,
+			</if>
+			<if test="teacherMajor != null">
+				teacherMajor,
+			</if>
+			<if test="teacherProject != null">
+				teacherProject,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="teacherNumber != null">
+				#{teacherNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="teacherMajor != null">
+				#{teacherMajor,jdbcType=VARCHAR},
+			</if>
+			<if test="teacherProject != null">
+				#{teacherProject,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="getAllMajors" resultType="java.lang.String">
+		select distinct majortoteacher.teacherMajor from majortoteacher
+	</select>
+	<select id="getAllProjects" resultType="java.lang.String">
+		select majortoteacher.teacherProject from majortoteacher
+		where teacherMajor = #{major,jdbcType=VARCHAR}
+	</select>
+	<select id="getAllTeachers" resultType="java.lang.String">
+		select distinct teacherName
+		from majortoteacher,teacherinfo
+		where teacherProject = #{project,jdbcType=VARCHAR}
+		and majortoteacher.teacherNumber = teacherinfo.teacherNumber
+	</select>
+</mapper>

@@ -3,6 +3,56 @@
   <component name="PersistentConfig">
     <option name="historyConfigList">
       <map>
+        <entry key="MajorToTeacher">
+          <value>
+            <Config>
+              <option name="comment" value="true" />
+              <option name="daoMvnPath" value="src/main/java" />
+              <option name="daoName" value="MajorToTeacherDao" />
+              <option name="daoPackage" value="com.light.graduation.dao" />
+              <option name="daoPostfix" value="Dao" />
+              <option name="modelMvnPath" value="src/main/java" />
+              <option name="modelName" value="MajorToTeacher" />
+              <option name="modelPackage" value="com.light.graduation.entity" />
+              <option name="name" value="MajorToTeacher" />
+              <option name="overrideJava" value="true" />
+              <option name="overrideXML" value="true" />
+              <option name="primaryKey" value="" />
+              <option name="projectFolder" value="$PROJECT_DIR$" />
+              <option name="tableName" value="MajorToTeacher" />
+              <option name="useActualColumnNames" value="true" />
+              <option name="useLombokPlugin" value="true" />
+              <option name="useSchemaPrefix" value="true" />
+              <option name="xmlMvnPath" value="src/main/resources/mybatis" />
+              <option name="xmlPackage" value="dao" />
+            </Config>
+          </value>
+        </entry>
+        <entry key="loginrecord">
+          <value>
+            <Config>
+              <option name="comment" value="true" />
+              <option name="daoMvnPath" value="src/main/java" />
+              <option name="daoName" value="LoginRecordDao" />
+              <option name="daoPackage" value="com.light.graduation.dao" />
+              <option name="daoPostfix" value="Dao" />
+              <option name="modelMvnPath" value="src/main/java" />
+              <option name="modelName" value="LoginRecord" />
+              <option name="modelPackage" value="com.light.graduation.entity" />
+              <option name="name" value="loginrecord" />
+              <option name="overrideJava" value="true" />
+              <option name="overrideXML" value="true" />
+              <option name="primaryKey" value="" />
+              <option name="projectFolder" value="$PROJECT_DIR$" />
+              <option name="tableName" value="loginrecord" />
+              <option name="useActualColumnNames" value="true" />
+              <option name="useLombokPlugin" value="true" />
+              <option name="useSchemaPrefix" value="true" />
+              <option name="xmlMvnPath" value="src/main/resources/mybatis" />
+              <option name="xmlPackage" value="dao" />
+            </Config>
+          </value>
+        </entry>
         <entry key="ncist">
           <value>
             <Config>
@@ -29,16 +79,66 @@
             </Config>
           </value>
         </entry>
+        <entry key="student">
+          <value>
+            <Config>
+              <option name="comment" value="true" />
+              <option name="daoMvnPath" value="src/main/java" />
+              <option name="daoName" value="StudentDao" />
+              <option name="daoPackage" value="com.light.graduation.dao" />
+              <option name="daoPostfix" value="Dao" />
+              <option name="modelMvnPath" value="src/main/java" />
+              <option name="modelName" value="Student" />
+              <option name="modelPackage" value="com.light.graduation.entity" />
+              <option name="name" value="student" />
+              <option name="overrideJava" value="true" />
+              <option name="overrideXML" value="true" />
+              <option name="primaryKey" value="studentNumber" />
+              <option name="projectFolder" value="$PROJECT_DIR$" />
+              <option name="tableName" value="student" />
+              <option name="useActualColumnNames" value="true" />
+              <option name="useLombokPlugin" value="true" />
+              <option name="useSchemaPrefix" value="true" />
+              <option name="xmlMvnPath" value="src/main/resources" />
+              <option name="xmlPackage" value="dao" />
+            </Config>
+          </value>
+        </entry>
+        <entry key="studentclockin">
+          <value>
+            <Config>
+              <option name="comment" value="true" />
+              <option name="daoMvnPath" value="src/main/java" />
+              <option name="daoName" value="StudentclockinDao" />
+              <option name="daoPackage" value="com.light.graduation.dao" />
+              <option name="daoPostfix" value="Dao" />
+              <option name="modelMvnPath" value="src/main/java" />
+              <option name="modelName" value="Studentclockin" />
+              <option name="modelPackage" value="com.light.graduation.entity" />
+              <option name="name" value="studentclockin" />
+              <option name="overrideJava" value="true" />
+              <option name="overrideXML" value="true" />
+              <option name="primaryKey" value="" />
+              <option name="projectFolder" value="$PROJECT_DIR$" />
+              <option name="tableName" value="studentclockin" />
+              <option name="useActualColumnNames" value="true" />
+              <option name="useLombokPlugin" value="true" />
+              <option name="useSchemaPrefix" value="true" />
+              <option name="xmlMvnPath" value="src/main/resources/mybatis" />
+              <option name="xmlPackage" value="dao" />
+            </Config>
+          </value>
+        </entry>
         <entry key="studentinfo">
           <value>
             <Config>
               <option name="comment" value="true" />
               <option name="daoMvnPath" value="src/main/java" />
-              <option name="daoName" value="StudentinfoDao" />
+              <option name="daoName" value="StudentDao" />
               <option name="daoPackage" value="com.light.graduation.dao" />
               <option name="daoPostfix" value="Dao" />
               <option name="modelMvnPath" value="src/main/java" />
-              <option name="modelName" value="Studentinfo" />
+              <option name="modelName" value="Student" />
               <option name="modelPackage" value="com.light.graduation.entity" />
               <option name="name" value="studentinfo" />
               <option name="overrideJava" value="true" />
@@ -47,6 +147,30 @@
               <option name="projectFolder" value="$PROJECT_DIR$" />
               <option name="tableName" value="studentinfo" />
               <option name="useActualColumnNames" value="true" />
+              <option name="useLombokPlugin" value="true" />
+              <option name="useSchemaPrefix" value="true" />
+              <option name="xmlMvnPath" value="src/main/resources" />
+              <option name="xmlPackage" value="dao" />
+            </Config>
+          </value>
+        </entry>
+        <entry key="teacher">
+          <value>
+            <Config>
+              <option name="comment" value="true" />
+              <option name="daoMvnPath" value="src/main/java" />
+              <option name="daoName" value="TeacherDao" />
+              <option name="daoPackage" value="generate" />
+              <option name="daoPostfix" value="Dao" />
+              <option name="modelMvnPath" value="src/main/java" />
+              <option name="modelName" value="Teacher" />
+              <option name="modelPackage" value="generate" />
+              <option name="name" value="teacher" />
+              <option name="overrideJava" value="true" />
+              <option name="overrideXML" value="true" />
+              <option name="primaryKey" value="teacherNumber" />
+              <option name="projectFolder" value="$PROJECT_DIR$" />
+              <option name="tableName" value="teacher" />
               <option name="useLombokPlugin" value="true" />
               <option name="useSchemaPrefix" value="true" />
               <option name="xmlMvnPath" value="src/main/resources" />
