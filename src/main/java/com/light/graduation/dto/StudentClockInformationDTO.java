@@ -13,7 +13,7 @@ import java.util.Date;
 public class StudentClockInformationDTO {
 	private String clockInProject;
 	
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat( pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8" )
 	private Date clockTime;
 	private String clockState;
 	private String errorReason;

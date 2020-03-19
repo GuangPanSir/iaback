@@ -13,7 +13,8 @@ public enum MemberEnum {
 	 * 登陆者的身份
 	 */
 	STUDENT ( 0 , "student" ),
-	TEACHER ( 1 , "teacher" ),;
+	TEACHER ( 1 , "teacher" ),
+	;
 	
 	int type;
 	String identity;

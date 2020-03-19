@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.light.graduation.dao.QuoteDao">
+	<resultMap id="BaseResultMap" type="com.light.graduation.entity.Quote">
+		<result column="quote" jdbcType="VARCHAR" property="quote"/>
+	</resultMap>
+	<insert id="insert" parameterType="com.light.graduation.entity.Quote">
+    insert into quote (`quote`)
+    values (#{quote,jdbcType=VARCHAR})
+  </insert>
+	<insert id="insertSelective" parameterType="com.light.graduation.entity.Quote">
+		insert into quote
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="quote != null">
+				`quote`,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="quote != null">
+				#{quote,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="selectQuote" resultType="java.lang.String">
+		SELECT quote 
+		FROM quote 
+		ORDER BY  RAND() 
+		LIMIT 1	
+	</select>
+</mapper>

@@ -26,8 +26,10 @@ public class StudentController {
 	
 	@Resource( name = "projectServiceImpl" )
 	private ProjectService projectService;
+	
 	/**
 	 * 用于查询用户的所有签到信息，返回前端并进行展示
+	 *
 	 * @param session 本次用戶的会话
 	 * @return 用户签到信息列表
 	 */
@@ -35,7 +37,9 @@ public class StudentController {
 	@ResponseBody
 	public StudentClockInformationPojo selectStudentClockInformation ( @NotNull HttpSession session ) {
 		StudentClockInformationPojo studentClockInformationPojo = new StudentClockInformationPojo ( );
-		studentClockInformationPojo.setList ( this.studentService.getStudentClockInformation ( (String ) session.getAttribute ( "userName" ) ) );
+		System.out.println ( this.studentService.getStudentClockInformation ( ( String ) session.getAttribute ( "userName" ) ) );
+		studentClockInformationPojo.setList ( this.studentService.getStudentClockInformation ( ( String ) session.getAttribute ( "userName" ) ) );
+		System.out.println ( studentClockInformationPojo );
 		return studentClockInformationPojo;
 	}
 	
@@ -45,10 +49,16 @@ public class StudentController {
 	 */
 	@RequestMapping( "studentCheckClockSelect" )
 	@ResponseBody
-	public HashMap< String, Object > checkStudentClockSelect (@RequestBody CheckStudentClockSelectPojo checkStudentClockSelectPojo ) {
+	public HashMap< String, Object > checkStudentClockSelect ( HttpSession session , @RequestBody CheckStudentClockSelectPojo checkStudentClockSelectPojo ) {
 		System.out.println ( checkStudentClockSelectPojo );
 		HashMap< String, Object > map = new HashMap<> ( 15 );
-		map.put ( "isTrue" , this.projectService.checkStudentClockSelect ( checkStudentClockSelectPojo ) );
+		boolean isTrue = this.projectService.checkStudentClockSelect ( checkStudentClockSelectPojo );
+		map.put ( "isTrue" , isTrue );
+		if ( isTrue ) {
+			session.setAttribute ( "clockMajor" , checkStudentClockSelectPojo.getMajor ( ) );
+			session.setAttribute ( "clockProject" , checkStudentClockSelectPojo.getProject ( ) );
+			session.setAttribute ( "clockTeacher" , checkStudentClockSelectPojo.getTeacher ( ) );
+		}
 		return map;
 	}
 }

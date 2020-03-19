@@ -72,14 +72,14 @@ public class FaceTest {
 		if ( imageInfo == null ) {
 			System.out.println ( "图片错误" );
 		}
-		System.out.println ("imageInfo:" + imageInfo );
+		System.out.println ( "imageInfo:" + imageInfo );
 		List< FaceInfo > faceInfoList = new ArrayList< FaceInfo > ( );
 		errorCode = faceEngine.detectFaces ( imageInfo.getImageData ( ) , imageInfo.getWidth ( ) , imageInfo.getHeight ( ) , imageInfo.getImageFormat ( ) , faceInfoList );
 		System.out.println ( faceInfoList );
-		if ( faceInfoList.size () == 0 ) {
-			System.out.println ("检测不到人脸" );
+		if ( faceInfoList.size ( ) == 0 ) {
+			System.out.println ( "检测不到人脸" );
 		}
-		System.out.println ("faceinfo" + faceInfoList );
+		System.out.println ( "faceinfo" + faceInfoList );
 		//特征提取
 		FaceFeature faceFeature = new FaceFeature ( );
 		errorCode = faceEngine.extractFaceFeature ( imageInfo.getImageData ( ) , imageInfo.getWidth ( ) , imageInfo.getHeight ( ) , imageInfo.getImageFormat ( ) , faceInfoList.get ( 0 ) , faceFeature );
@@ -106,8 +106,8 @@ public class FaceTest {
 		errorCode = faceEngine.compareFaceFeature ( targetFaceFeature , sourceFaceFeature , faceSimilar );
 		
 		System.out.println ( "潘光健01与潘光健02相似度：" + faceSimilar.getScore ( ) );
-		System.out.println (targetFaceFeature);
-		System.out.println (sourceFaceFeature );
+		System.out.println ( targetFaceFeature );
+		System.out.println ( sourceFaceFeature );
 		//设置活体测试
 		errorCode = faceEngine.setLivenessParam ( 0.5f , 0.7f );
 		//人脸属性检测

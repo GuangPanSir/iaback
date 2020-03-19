@@ -18,10 +18,9 @@ import java.util.Map;
  */
 @Component( value = "student" )
 public class StudentLogin implements CheckLogin {
+	private final RedisTemplate< String, Object > redisTemplate;
 	@Resource( name = "studentServiceImpl" )
 	private StudentService studentService;
-	
-	private final RedisTemplate< String, Object > redisTemplate;
 	
 	@Contract( pure = true )
 	public StudentLogin ( RedisTemplate< String, Object > redisTemplate ) {
@@ -44,7 +43,9 @@ public class StudentLogin implements CheckLogin {
 	}
 	
 	@Override
-	public HashMap checkUser ( HttpSession session , @NotNull CheckLoginDTO checkLoginUser ) {
+	public HashMap checkUser ( @NotNull HttpSession session , @NotNull CheckLoginDTO checkLoginUser ) {
+		String user = ( String ) session.getAttribute ( "userName" );
+		
 		Map< Object, Object > redisMap = redisTemplate.opsForHash ( ).entries ( "user:" + checkLoginUser.getIdentity ( ) + ":" + checkLoginUser.getUserName ( ) );
 		
 		HashMap< String, Object > map = new HashMap<> ( 15 );
@@ -72,6 +73,7 @@ public class StudentLogin implements CheckLogin {
 		
 		if ( checkLogin ) {
 			SaveToSession.saveToSession ( session , checkLoginUser );
+			map.put ( "studentName" , this.studentService.getStudentNameByStudentNumber ( checkLoginUser.getUserName ( ) ) );
 			if ( redisMap.size ( ) == 0 ) {
 				SaveUserToRedis.saveUserToRedis ( redisTemplate , redisMap , checkLoginUser );
 			}
@@ -80,6 +82,12 @@ public class StudentLogin implements CheckLogin {
 		map.put ( "isTrue" , checkLogin );
 		map.put ( "identity" , checkLoginUser.getIdentity ( ) );
 		map.put ( "major" , this.studentService.getStudentMajor ( checkLoginUser.getUserName ( ) ) );
+		
+		if ( user == null ) {
+			map.put ( "isLogin" , false );
+		} else {
+			map.put ( "isLogin" , true );
+		}
 		
 		return map;
 	}

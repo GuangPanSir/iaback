@@ -1,4 +1,3 @@
-
 package com.light.graduation.pojo;
 
 import lombok.Data;
@@ -7,14 +6,18 @@ import lombok.Data;
  * @author Light
  */
 @Data
-@SuppressWarnings("unused")
+@SuppressWarnings( "unused" )
 public class TeacherClockSettingPojo {
-
-    private String deadLine;
-    private String distance;
-    private String lastTime;
-    private String major;
-    private String project;
-    private String teacher;
-
+	
+	private String deadLine;
+	private String distance;
+	private String lastTime;
+	private String major;
+	private String project;
+	private String teacher;
+	private double lng;
+	private double lat;
+	private String address;
+	private Integer accuracy;
+	
 }

@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="graduation@localhost" uuid="83cc079a-dcd0-4351-b814-2819d62ab3fe">
+    <data-source source="LOCAL" name="jdbc:mysql://localhost:8086/graduation?serverTimezone=Asia/Shanghai" uuid="83cc079a-dcd0-4351-b814-2819d62ab3fe">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:8086/graduation?serverTimezone=UTC</jdbc-url>
+      <jdbc-url>jdbc:mysql://localhost:8086/graduation?serverTimezone=Asia/Shanghai</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="@localhost" uuid="c954c342-7e01-4639-b918-a09bd6e9cc4e">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306</jdbc-url>
     </data-source>
   </component>
 </project>

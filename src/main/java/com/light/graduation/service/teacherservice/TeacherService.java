@@ -8,9 +8,43 @@ import com.light.graduation.entity.LoginRecord;
  * @Date 2020/3/2 16:51
  */
 public interface TeacherService {
-	boolean checkTeacherLogin ( CheckLoginDTO loginUser);
+	/**
+	 * 检测教师用户的登录状态
+	 *
+	 * @param loginUser 登录的用户
+	 * @return 是否登陆成功
+	 */
+	boolean checkTeacherLogin ( CheckLoginDTO loginUser );
 	
+	/**
+	 * 向数据库中插入教师设置的签到相关设置
+	 *
+	 * @param loginRecord 教师设置的签到相关选项
+	 * @return 数据库的影响条数
+	 */
 	int teacherClockSetting ( LoginRecord loginRecord );
 	
+	/**
+	 * 更新教师之前设置的相关签到信息
+	 *
+	 * @param loginRecord 教师设置的相关签到设置
+	 * @return 数据库的影响条数
+	 */
+	int teacherClockUpdate ( LoginRecord loginRecord );
+	
+	/**
+	 * 根据教师姓名获取教师编号
+	 *
+	 * @param teacherName 教师姓名
+	 * @return 教师编号
+	 */
 	String selectTeacherNumberByTeacherName ( String teacherName );
+	
+	/**
+	 * 根据教师姓名获取教师编号
+	 *
+	 * @param teacherNumber 教师编号
+	 * @return 教师姓名
+	 */
+	String queryTeacherNameByTeacherNumber ( String teacherNumber );
 }

@@ -20,7 +20,7 @@ import java.util.HashMap;
 @Controller
 @RequestMapping( "login" )
 public class LoginController {
-	@Resource(name = "checkLoginFactory")
+	@Resource( name = "checkLoginFactory" )
 	private CheckLoginFactory checkLoginFactory;
 	
 	@RequestMapping( value = "login" )

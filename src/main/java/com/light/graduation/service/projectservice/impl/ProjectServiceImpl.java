@@ -14,7 +14,7 @@ import java.util.List;
  * @Author: Light
  * @Date 2020/3/4 17:31
  */
-@Service(value = "projectServiceImpl")
+@Service( value = "projectServiceImpl" )
 public class ProjectServiceImpl implements ProjectService {
 	private final MajorToTeacherDao majorToTeacherDao;
 	private final LoginRecordDao loginRecordDao;
@@ -43,15 +43,26 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public Boolean checkStudentClockSelect ( CheckStudentClockSelectPojo checkStudentClockSelectPojo ) {
 		LoginRecord loginRecord = this.loginRecordDao.checkStudentClockSelect ( checkStudentClockSelectPojo );
-		Long loginRecordStartTime;
-		try {
-			loginRecordStartTime = loginRecord.getClockInStartTime ( ).getTime ( );
-		} catch ( NullPointerException e ) {
+		
+		if ( loginRecord == null ) {
 			return false;
 		}
-		Long localTime = System.currentTimeMillis ( );
 		
-		//老师设置的签到任务是在十分钟之前发布的
-		return localTime - loginRecordStartTime <= 10 * 60 * 1000;
+		return System.currentTimeMillis ( ) < loginRecord.getClockInAbsentTime ( ).getTime ( );
+	}
+	
+	@Override
+	public LoginRecord getLastLoginRecord ( CheckStudentClockSelectPojo checkStudentClockSelectPojo ) {
+		LoginRecord loginRecord = this.loginRecordDao.checkStudentClockSelect ( checkStudentClockSelectPojo );
+		
+		if ( loginRecord == null ) {
+			return null;
+		}
+		
+		if ( System.currentTimeMillis ( ) < loginRecord.getClockInAbsentTime ( ).getTime ( ) ) {
+			return loginRecord;
+		} else {
+			return null;
+		}
 	}
 }

@@ -29,32 +29,27 @@ import static com.arcsoft.face.toolkit.ImageFactory.getRGBData;
 @NoArgsConstructor
 @Service
 public class FaceServiceImpl implements FaceService {
+	/**
+	 * 图片信息
+	 */
+	public ImageInfo imageInfo = new ImageInfo ( );
+	/**
+	 * 获取人脸信息
+	 */
+	public List< FaceInfo > faceInfoList = new ArrayList<> ( );
+	/**
+	 * 人脸信息
+	 */
+	public FaceFeature faceFeature = new FaceFeature ( );
 	private StudentDao studentDao;
-	
 	/**
 	 * 获取人脸识别引擎
 	 */
 	private FaceEngine faceEngine = GetFaceEngine.getFaceEngine ( );
-	
 	/**
 	 * 图片编码
 	 */
 	private String imgStr;
-	
-	/**
-	 * 图片信息
-	 */
-	public ImageInfo imageInfo = new ImageInfo ();
-	
-	/**
-	 * 获取人脸信息
-	 */
-	public List< FaceInfo > faceInfoList = new ArrayList<>();
-	
-	/**
-	 * 人脸信息
-	 */
-	public FaceFeature faceFeature = new FaceFeature (  );
 	
 	public FaceServiceImpl ( String imgStr ) {
 		this.imgStr = imgStr;
@@ -66,24 +61,24 @@ public class FaceServiceImpl implements FaceService {
 	}
 	
 	@Override
-	public boolean detectFaces (   ) {
+	public boolean detectFaces ( ) {
 		//首先对标志位赋初值，图片中识别到人脸
 		boolean flag = true;
-		if ( getFaceInfo (  ).size ( ) == 0 ) {
+		if ( getFaceInfo ( ).size ( ) == 0 ) {
 			flag = false;
 		}
 		return flag;
 	}
 	
 	@Override
-	public int faceFeatureLength (   ) {
-		return faceFeature (   ).length;
+	public int faceFeatureLength ( ) {
+		return faceFeature ( ).length;
 	}
 	
 	@Override
-	public byte[] faceFeature (  ) {
+	public byte[] faceFeature ( ) {
 		try {
-			faceInfoList = getFaceInfo (  );
+			faceInfoList = getFaceInfo ( );
 			faceEngine.extractFaceFeature ( imageInfo.getImageData ( ) , imageInfo.getWidth ( ) , imageInfo.getHeight ( ) , imageInfo.getImageFormat ( ) , faceInfoList.get ( 0 ) , faceFeature );
 		} catch ( Exception e ) {
 			//未检测到人脸
@@ -93,13 +88,13 @@ public class FaceServiceImpl implements FaceService {
 	}
 	
 	@Override
-	public FaceFeature getFaceFeature (   ) {
-		faceFeature (  );
+	public FaceFeature getFaceFeature ( ) {
+		faceFeature ( );
 		return faceFeature;
 	}
 	
 	@Override
-	public List< FaceInfo > getFaceInfo (   ) {
+	public List< FaceInfo > getFaceInfo ( ) {
 		//首先对标志位赋初值，图片中识别到人脸
 		byte[] imageByte = ImageConvertUtils.base64String2ByteFun ( imgStr );
 		try {
@@ -127,7 +122,7 @@ public class FaceServiceImpl implements FaceService {
 	public boolean faceCompare ( FaceFeature targetFaceFeature , FaceSimilar faceSimilar ) {
 		boolean flag = false;
 		float checkSimilarScore = 0.8f;
-		if ( faceSimilarScore ( targetFaceFeature,  faceSimilar ) > checkSimilarScore ) {
+		if ( faceSimilarScore ( targetFaceFeature , faceSimilar ) > checkSimilarScore ) {
 			flag = true;
 		}
 		return flag;
@@ -135,15 +130,15 @@ public class FaceServiceImpl implements FaceService {
 	
 	@Override
 	public boolean faceCompare ( String targetImgStr , String sourceImgStr ) {
-		FaceServiceImpl faceServiceImpl01 = new FaceServiceImpl (targetImgStr );
+		FaceServiceImpl faceServiceImpl01 = new FaceServiceImpl ( targetImgStr );
 		try {
-			faceServiceImpl01.getFaceFeature (   );
+			faceServiceImpl01.getFaceFeature ( );
 		} catch ( Exception e ) {
 			//未检测出人脸
 			return false;
 		}
 		FaceServiceImpl faceServiceImpl02 = new FaceServiceImpl ( sourceImgStr );
-		FaceFeature faceFeature02 = faceServiceImpl02.getFaceFeature (   );
+		FaceFeature faceFeature02 = faceServiceImpl02.getFaceFeature ( );
 		return faceServiceImpl01.faceCompare ( faceFeature02 , new FaceSimilar ( ) );
 	}
 	

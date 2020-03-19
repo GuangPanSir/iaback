@@ -12,7 +12,7 @@ import java.util.Date;
  * @Date 2020/2/10 23:33
  */
 public class StringToDateConverter implements Converter< String, Date > {
-	private static final SimpleDateFormat FORMAT = new SimpleDateFormat ( "YYYY-MM-dd");
+	private static final SimpleDateFormat FORMAT = new SimpleDateFormat ( "YYYY-MM-dd" );
 	
 	@Override
 	public Date convert ( String s ) {

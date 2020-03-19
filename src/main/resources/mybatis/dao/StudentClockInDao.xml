@@ -10,15 +10,20 @@
 		<result column="clockState" jdbcType="VARCHAR" property="clockState"/>
 		<result column="errorReason" jdbcType="VARCHAR" property="errorReason"/>
 		<result column="certification" jdbcType="VARCHAR" property="certification"/>
+		<result column="clockLng" jdbcType="DOUBLE" property="clockLng"/>
+		<result column="clockLat" jdbcType="DOUBLE" property="clockLat"/>
+		<result column="clockAccuracy" jdbcType="INTEGER" property="clockAccuracy"/>
+		<result column="clockAddress" jdbcType="VARCHAR" property="clockAddress"/>
 	</resultMap>
 	<insert id="insert" parameterType="com.light.graduation.entity.StudentClockIn">
     insert into studentclockin (studentNumber, clockInTeacherNumber, 
       clockInProject, clockTime, clockLocation, 
-      clockState, errorReason, certification
+      clockState, errorReason, certification,clockLng,clockLat,clockAccuracy,ClockAddress
       )
     values (#{studentNumber,jdbcType=VARCHAR}, #{clockInTeacherNumber,jdbcType=VARCHAR}, 
       #{clockInProject,jdbcType=VARCHAR}, #{clockTime,jdbcType=TIMESTAMP}, #{clockLocation,jdbcType=VARCHAR}, 
-      #{clockState,jdbcType=VARCHAR}, #{errorReason,jdbcType=VARCHAR}, #{certification,jdbcType=VARCHAR}
+      #{clockState,jdbcType=VARCHAR}, #{errorReason,jdbcType=VARCHAR}, #{certification,jdbcType=VARCHAR},
+      #{clockLng,jdbcType=DOUBLE},#{clockLat,jdbcType=DOUBLE},#{clockAccuracy,jdbcType=INTEGER},#{clockAddress,jdbcType=VARCHAR}
       )
   </insert>
 	<insert id="insertSelective" parameterType="com.light.graduation.entity.StudentClockIn">
@@ -48,6 +53,18 @@
 			<if test="certification != null">
 				certification,
 			</if>
+			<if test="clockLng != null">
+				clockLng,
+			</if>
+			<if test="clockLat != null">
+				clockLat,
+			</if>
+			<if test="clockAccuracy != null">
+				clockAccuracy,
+			</if>
+			<if test="clockAddress != null">
+				clockAddress,
+			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="studentNumber != null">
@@ -74,13 +91,63 @@
 			<if test="certification != null">
 				#{certification,jdbcType=VARCHAR},
 			</if>
+			<if test="clockLng != null">
+				#{clockLng,jdbcType=DOUBLE},
+			</if>
+			<if test="clockLat != null">
+				#{clockLat,jdbcType=DOUBLE},
+			</if>
+			<if test="clockAccuracy != null">
+				#{clockAccuracy,jdbcType=INTEGER},
+			</if>
+			<if test="clockAddress != null">
+				#{clockAddress,jdbcType=VARCHAR},
+			</if>
 		</trim>
 	</insert>
+	<update id="updateSelective" parameterType="com.light.graduation.entity.StudentClockIn">
+		update studentclockin
+		<set>
+			<if test="clockState != null">
+				clockState = #{clockState,jdbcType=VARCHAR},
+			</if>
+			<if test="errorReason != null">
+				errorReason = #{errorReason,jdbcType=VARCHAR},
+			</if>
+			<if test="clockTime != null">
+				clockTime = #{clockTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="clockLng != null">
+				clockLng = #{clockLng,jdbcType=DOUBLE},
+			</if>
+			<if test="clockLat != null">
+				clockLat = #{clockLat,jdbcType=DOUBLE},
+			</if>
+			<if test="clockAccuracy != null">
+				clockAccuracy = #{clockAccuracy,jdbcType=INTEGER},
+			</if>
+			<if test="clockAddress != null">
+				clockAddress = #{clockAddress,jdbcType=VARCHAR}
+			</if>
+		</set>
+		where studentNumber = #{studentNumber,jdbcType=VARCHAR}
+	</update>
 	<select id="getStudentClockInformation"
-		resultType="com.light.graduation.dto.StudentClockInformationDTO">
+			resultType="com.light.graduation.dto.StudentClockInformationDTO">
 		select clockInProject,clockTime,teacherinfo.teacherName,clockState,errorReason
 		from teacherinfo,studentclockin
 		where studentNumber = #{studentNumber,jdbcType=VARCHAR}
 		and clockInTeacherNumber = teacherinfo.teacherNumber
+	</select>
+	<select id="getLastClockInformation" resultType="com.light.graduation.entity.StudentClockIn">
+		select *
+		from studentclockin
+		where clockTime = (
+			select clockTime
+			from (
+			      select *
+			      from studentclockin
+			      where studentNumber = #{studentNumber,jdbcType=VARCHAR}
+			      order by clockTime desc limit 1) as `l*`)
 	</select>
 </mapper>

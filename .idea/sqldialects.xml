@@ -3,6 +3,7 @@
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/src/main/resources/mybatis/dao/LoginRecordDao.xml" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/mybatis/dao/MajorToTeacherDao.xml" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/mybatis/dao/QuoteDao.xml" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/mybatis/dao/StudentClockInDao.xml" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/mybatis/dao/StudentDao.xml" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/mybatis/dao/TeacherDao.xml" dialect="GenericSQL" />

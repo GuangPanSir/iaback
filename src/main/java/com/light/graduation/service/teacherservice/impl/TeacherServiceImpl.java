@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
  * @Author: Light
  * @Date 2020/3/2 16:51
  */
-@Service(value = "teacherServiceImpl")
+@Service( value = "teacherServiceImpl" )
 public class TeacherServiceImpl implements TeacherService {
 	private final TeacherDao teacherDao;
 	
@@ -27,8 +27,8 @@ public class TeacherServiceImpl implements TeacherService {
 	
 	@Override
 	public boolean checkTeacherLogin ( @NotNull CheckLoginDTO loginUser ) {
-		String teacherPassword = this.teacherDao.getTeacherPassword ( loginUser.getUserName () );
-		return loginUser.getUserPassword ().equals ( teacherPassword );
+		String teacherPassword = this.teacherDao.getTeacherPassword ( loginUser.getUserName ( ) );
+		return loginUser.getUserPassword ( ).equals ( teacherPassword );
 	}
 	
 	@Override
@@ -39,5 +39,15 @@ public class TeacherServiceImpl implements TeacherService {
 	@Override
 	public String selectTeacherNumberByTeacherName ( String teacherName ) {
 		return this.teacherDao.selectTeacherNumberByTeacherName ( teacherName );
+	}
+	
+	@Override
+	public String queryTeacherNameByTeacherNumber ( String teacherNumber ) {
+		return this.teacherDao.queryTeacherNameByTeacherNumber ( teacherNumber );
+	}
+	
+	@Override
+	public int teacherClockUpdate ( LoginRecord loginRecord ) {
+		return this.loginRecordDao.updateClockSettingSelective ( loginRecord );
 	}
 }

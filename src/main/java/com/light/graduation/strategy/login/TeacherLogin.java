@@ -16,12 +16,11 @@ import java.util.Map;
  * @Author: Light
  * @Date 2020/3/6 19:31
  */
-@Component(value = "teacher")
+@Component( value = "teacher" )
 public class TeacherLogin implements CheckLogin {
-	@Resource(name = "teacherServiceImpl")
-	private TeacherService teacherService;
-	
 	private final RedisTemplate< String, Object > redisTemplate;
+	@Resource( name = "teacherServiceImpl" )
+	private TeacherService teacherService;
 	
 	@Contract( pure = true )
 	public TeacherLogin ( RedisTemplate< String, Object > redisTemplate ) {
@@ -35,17 +34,20 @@ public class TeacherLogin implements CheckLogin {
 	
 	@Override
 	public Integer getType ( ) {
-		return MemberEnum.TEACHER.getType ();
+		return MemberEnum.TEACHER.getType ( );
 	}
 	
 	@Override
 	public String getIdentity ( ) {
-		return MemberEnum.TEACHER.getIdentity ();
+		return MemberEnum.TEACHER.getIdentity ( );
 	}
 	
 	@Override
-	public HashMap checkUser ( HttpSession session , @NotNull CheckLoginDTO checkLoginUser ) {
-		Map<Object, Object> redisMap = redisTemplate.opsForHash ( ).entries ( "user:" + checkLoginUser.getIdentity ( ) + ":" + checkLoginUser.getUserName ( ) );
+	public HashMap checkUser ( @NotNull HttpSession session , @NotNull CheckLoginDTO checkLoginUser ) {
+		
+		Map< Object, Object > redisMap = redisTemplate.opsForHash ( ).entries ( "user:" + checkLoginUser.getIdentity ( ) + ":" + checkLoginUser.getUserName ( ) );
+		
+		String user = ( String ) session.getAttribute ( "userName" );
 		
 		HashMap< String, Object > map = new HashMap<> ( 15 );
 		
@@ -53,27 +55,35 @@ public class TeacherLogin implements CheckLogin {
 		
 		boolean checkLogin = false;
 		
-		if(redisMap.size () != 0){
+		if ( redisMap.size ( ) != 0 ) {
 			//match users from cache
 			if ( redisMap.get ( password ).equals ( checkLoginUser.getUserPassword ( ) ) ) {
 				checkLogin = true;
 			}
-		}else {
+		} else {
 			checkLogin = this.teacherService.checkTeacherLogin ( checkLoginUser );
 		}
 		
-		if ( checkLogin && redisMap.size () == 0 ) {
+		if ( checkLogin && redisMap.size ( ) == 0 ) {
 			SaveUserToRedis.saveUserToRedis ( redisTemplate , redisMap , checkLoginUser );
 		}
 		
 		if ( checkLogin ) {
 			SaveToSession.saveToSession ( session , checkLoginUser );
+			String teacherName = this.teacherService.queryTeacherNameByTeacherNumber ( checkLoginUser.getUserName ( ) );
+			map.put ( "teacherName" , teacherName );
 		}
 		
 		map.put ( "isTrue" , checkLogin );
 		map.put ( "identity" , checkLoginUser.getIdentity ( ) );
 		
-		System.out.println ("teacherLogin" + session.getAttribute ( "userName" ) );
+		if ( user == null ) {
+			map.put ( "isLogin" , false );
+		} else {
+			map.put ( "isLogin" , true );
+		}
+		
+		System.out.println ( "teacherLogin" + session.getAttribute ( "userName" ) );
 		
 		return map;
 	}

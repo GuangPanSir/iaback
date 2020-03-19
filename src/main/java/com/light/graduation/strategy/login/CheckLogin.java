@@ -12,19 +12,22 @@ import java.util.HashMap;
 public interface CheckLogin {
 	/**
 	 * 根据身份进行登录
+	 *
 	 * @param checkLoginUser 登陆者信息
 	 * @return 是否登陆成功
 	 */
 	Boolean checkLogin ( CheckLoginDTO checkLoginUser );
 	
 	/**
-	 *获取登陆者身份代号
+	 * 获取登陆者身份代号
+	 *
 	 * @return 获取登陆者身份代号
 	 */
 	Integer getType ( );
 	
 	/**
-	 *获取登陆者身份
+	 * 获取登陆者身份
+	 *
 	 * @return 获取登陆者身份
 	 */
 	String getIdentity ( );
@@ -33,8 +36,8 @@ public interface CheckLogin {
 	 * 包含redis操作的完整校验
 	 *
 	 * @param checkLoginUser 登陆者的信息
-	 * @param session 会话参数
+	 * @param session        会话参数
 	 * @return 需要返回前端的信息
 	 */
-	HashMap checkUser ( HttpSession session, CheckLoginDTO checkLoginUser );
+	HashMap checkUser ( HttpSession session , CheckLoginDTO checkLoginUser );
 }

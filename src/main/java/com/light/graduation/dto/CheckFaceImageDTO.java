@@ -8,7 +8,9 @@ import lombok.Data;
  */
 @Data
 public class CheckFaceImageDTO {
-	String img;
-	/*Double longitude;
-	Double latitude;*/
+	private String img;
+	private Double lng;
+	private Double lat;
+	private String address;
+	private Integer accuracy;
 }

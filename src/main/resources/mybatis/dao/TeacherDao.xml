@@ -27,6 +27,11 @@
 		from teacherinfo
 		where teacherName = #{teacherName,jdbcType=VARCHAR}
 	</select>
+	<select id="queryTeacherNameByTeacherNumber" resultType="java.lang.String">
+		select teacherinfo.teacherName
+		from teacherinfo
+		where teacherNumber = #{teachernumber,jdbcType=VARCHAR}
+	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     	delete from teacherinfo
     	where teacherNumber = #{teachernumber,jdbcType=VARCHAR}
