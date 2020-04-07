@@ -1,7 +1,12 @@
 package com.light.graduation.service.teacherservice;
 
 import com.light.graduation.dto.CheckLoginDTO;
+import com.light.graduation.dto.CurrentTimeInformation;
 import com.light.graduation.entity.LoginRecord;
+import com.light.graduation.pojo.CheckStudentClockSelectPojo;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * @Author: Light
@@ -47,4 +52,12 @@ public interface TeacherService {
 	 * @return 教师姓名
 	 */
 	String queryTeacherNameByTeacherNumber ( String teacherNumber );
+	
+	/**
+	 * 实时获取学生本节课程的签到信息
+	 * @param checkStudentClockSelectPojo 教师签到记录
+	 * @param teacherStartTime 教师设置签到时间
+	 * @return 学生信息列表
+	 */
+	List< CurrentTimeInformation > getCurrentTimeClockInformation ( CheckStudentClockSelectPojo checkStudentClockSelectPojo, Date teacherStartTime);
 }

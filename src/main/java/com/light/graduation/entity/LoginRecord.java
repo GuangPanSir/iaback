@@ -40,6 +40,10 @@ public class LoginRecord implements Serializable {
 	 */
 	private Integer clockInNormal;
 	/**
+	 * 异常签到人数
+	 */
+	private Integer clockInAbnormal;
+	/**
 	 * 缺席人数
 	 */
 	private Integer clockInAbsent;

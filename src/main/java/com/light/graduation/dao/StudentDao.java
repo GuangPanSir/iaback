@@ -1,5 +1,6 @@
 package com.light.graduation.dao;
 
+import com.light.graduation.dto.SearchStudentDto;
 import com.light.graduation.entity.Student;
 
 import java.util.List;
@@ -33,12 +34,37 @@ public interface StudentDao {
 	int insertSelective ( Student record );
 	
 	/**
+	 * 根据学生学号查询该生的信息,指定查询某些内容
+	 *
+	 * @param studentNumber 学生学号
+	 * @return 学生信息
+	 */
+	SearchStudentDto selectStudentByStudentNumber ( String studentNumber );
+	
+	/**
+	 * 根据学生学号或姓名查询该生的信息,指定查询某些内容
+	 *
+	 * @param studentNumber 学生学号或姓名
+	 * @return 学生信息
+	 */
+	SearchStudentDto selectStudentByStudentNumberOrStudentName ( String studentNumber );
+	
+	/**
+	 * 查询全部内容
 	 * 根据学生学号查询该生的信息
 	 *
 	 * @param studentNumber 学生学号
 	 * @return 学生信息
 	 */
-	Student selectByPrimaryKey ( String studentNumber );
+	Student selectStudentInfoByStudentNumber ( String studentNumber );
+	
+	/**
+	 * 根据学生学号查询该生的信息
+	 *
+	 * @param studentName 学生学号
+	 * @return 学生信息
+	 */
+	SearchStudentDto selectStudentByStudentName ( String studentName );
 	
 	/**
 	 * 选择性地更新学生信息

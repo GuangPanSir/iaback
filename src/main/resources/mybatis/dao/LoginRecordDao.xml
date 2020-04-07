@@ -9,6 +9,7 @@
 		<result column="clockInAbsentTime" jdbcType="TIMESTAMP" property="clockInAbsentTime"/>
 		<result column="locationDifference" jdbcType="DOUBLE" property="locationDifference"/>
 		<result column="clockInNormal" jdbcType="INTEGER" property="clockInNormal"/>
+		<result column="clockInAbnormal" jdbcType="INTEGER" property="clockInAbnormal"/>
 		<result column="clockInAbsent" jdbcType="INTEGER" property="clockInAbsent"/>
 		<result column="clockInOverdue" jdbcType="INTEGER" property="clockInOverdue"/>
 		<result column="clockInProject" jdbcType="VARCHAR" property="clockInProject"/>
@@ -20,13 +21,14 @@
 	<insert id="insert" parameterType="com.light.graduation.entity.LoginRecord">
     insert into loginrecord (teacherNumber, clockInMajor, clockInStartTime,
       clockInEndTime, clockInAbsentTime,
-      locationDifference, clockInNormal, clockInAbsent,
+      locationDifference, clockInNormal, clockInAbnormal,clockInAbsent,
       clockInOverdue, clockInProject,clockInLng,clockInLat,clockInAccuracy,clockInAddress)
     values (#{teacherNumber,jdbcType=VARCHAR}, #{clockInMajor,jdbcType=VARCHAR}, #{clockInStartTime,jdbcType=TIMESTAMP},
       #{clockInEndTime,jdbcType=TIMESTAMP}, #{clockInAbsentTime,jdbcType=TIMESTAMP},
-      #{locationDifference,jdbcType=DOUBLE}, #{clockInNormal,jdbcType=INTEGER}, #{clockInAbsent,jdbcType=INTEGER},
-      #{clockInOverdue,jdbcType=INTEGER}, #{clockInProject,jdbcType=VARCHAR}, #{clockInLng,jdbcType=DOUBLE} ,
-      #{clockInLat,jdbcType=DOUBLE} ,#{clockInAccuracy,jdbcType=INTEGER},#{clockInAddress,jdbcType=VARCHAR})
+      #{locationDifference,jdbcType=DOUBLE}, #{clockInNormal,jdbcType=INTEGER},#{clockInAbnormal,jdbcType=INTEGER},
+       #{clockInAbsent,jdbcType=INTEGER},#{clockInOverdue,jdbcType=INTEGER}, #{clockInProject,jdbcType=VARCHAR},
+       #{clockInLng,jdbcType=DOUBLE} ,#{clockInLat,jdbcType=DOUBLE} ,#{clockInAccuracy,jdbcType=INTEGER},
+       #{clockInAddress,jdbcType=VARCHAR})
   </insert>
 	<insert id="insertSelective" parameterType="com.light.graduation.entity.LoginRecord">
 		insert into loginrecord
@@ -51,6 +53,9 @@
 			</if>
 			<if test="clockInNormal != null">
 				clockInNormal,
+			</if>
+			<if test="clockInAbnormal != null">
+				clockInAbnormal,
 			</if>
 			<if test="clockInAbsent != null">
 				clockInAbsent,
@@ -96,6 +101,9 @@
 			<if test="clockInNormal != null">
 				#{clockInNormal,jdbcType=INTEGER},
 			</if>
+			<if test="clockInAbnormal != null">
+				#{clockInAbnormal,jdbcType=INTEGER},
+			</if>
 			<if test="clockInAbsent != null">
 				#{clockInAbsent,jdbcType=INTEGER},
 			</if>
@@ -140,6 +148,9 @@
 			<if test="clockInNormal != null">
 				clockInNormal = #{clockInNormal,jdbcType=INTEGER},
 			</if>
+			<if test="clockInAbnormal != null">
+				clockInAbnormal = #{clockInAbnormal,jdbcType=INTEGER},
+			</if>
 			<if test="clockInAbsent != null">
 				clockInAbsent = #{clockInAbsent,jdbcType=INTEGER},
 			</if>
@@ -173,12 +184,16 @@
 	<select id="checkStudentClockSelect" resultType="com.light.graduation.entity.LoginRecord">
 		select *
 		from loginrecord
-		where clockInMajor = #{major,jdbcType=VARCHAR}
-		and clockInProject = #{project,jdbcType=VARCHAR}
-		and teacherNumber = (
+		where teacherNumber = (
 			select teacherNumber
 			from teacherinfo
 			where teacherName = #{teacher,jdbcType=VARCHAR})
+		order by clockInStartTime desc limit 1;
+	</select>
+	<select id="getTeacherLastLoginRecord" resultType="com.light.graduation.entity.LoginRecord">
+		select *
+		from loginrecord
+		where teacherNumber = #{teacherNumber}
 		order by clockInStartTime desc limit 1;
 	</select>
 </mapper>

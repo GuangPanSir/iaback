@@ -14,6 +14,6 @@ class SaveToSession {
 		//user information saved to session
 		session.setAttribute ( "userName" , checkLoginUser.getUserName ( ) );
 		//setting the session life cycle
-		session.setMaxInactiveInterval ( 60 * 30 );
+		session.setMaxInactiveInterval ( 60 * 60 * 3 );
 	}
 }

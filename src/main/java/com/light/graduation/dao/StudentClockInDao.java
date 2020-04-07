@@ -1,8 +1,11 @@
 package com.light.graduation.dao;
 
+import com.light.graduation.dto.CurrentTimeInformation;
 import com.light.graduation.dto.StudentClockInformationDTO;
 import com.light.graduation.entity.StudentClockIn;
+import com.light.graduation.pojo.CheckStudentClockSelectPojo;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -42,6 +45,15 @@ public interface StudentClockInDao {
 	int updateSelective ( StudentClockIn studentClockIn );
 	
 	/**
+	 * 选择性地更新学生的请假记录（针对之前签到失败的同学而言）
+	 *
+	 * @param studentClockIn 学生的签到信息
+	 * @param VacateDate 请假时间
+	 * @return 数据库的影响条数
+	 */
+	int updateVacateSelective ( StudentClockIn studentClockIn,Date VacateDate );
+	
+	/**
 	 * 根据学生学号获取最近的一条签到记录
 	 *
 	 * @param studentNumber 学生学号
@@ -49,4 +61,11 @@ public interface StudentClockInDao {
 	 */
 	StudentClockIn getLastClockInformation ( String studentNumber );
 	
+	/**
+	 * 实时获取学生本节课程的签到信息
+	 * @param checkStudentClockSelectPojo 教师签到记录
+	 * @param teacherStartTime 教师设置签到时间
+	 * @return 学生信息列表
+	 */
+	List< CurrentTimeInformation > getCurrentTimeClockInformation ( CheckStudentClockSelectPojo checkStudentClockSelectPojo, Date teacherStartTime);
 }

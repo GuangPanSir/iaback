@@ -1,5 +1,6 @@
 package com.light.graduation.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -26,6 +27,7 @@ public class StudentClockIn implements Serializable {
 	/**
 	 * 打卡时间
 	 */
+	@JsonFormat( pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8" )
 	private Date clockTime;
 	/**
 	 * 打卡的地理位置（以经纬度表示）
@@ -62,4 +64,25 @@ public class StudentClockIn implements Serializable {
 	 * 学生地理位置
 	 */
 	private String clockAddress;
+	
+	/**
+	 * 请假是否被审核
+	 */
+	private int isCheck;
+	
+	/**
+	 * 请假是否被批准
+	 */
+	private int isPermit;
+	
+	/**
+	 * 学生签到人脸
+	 */
+	private String clockInImg;
+	
+	/**
+	 * 打卡时间
+	 */
+	@JsonFormat( pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8" )
+	private Date disposeTime;
 }

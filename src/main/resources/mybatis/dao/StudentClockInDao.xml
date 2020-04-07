@@ -14,6 +14,10 @@
 		<result column="clockLat" jdbcType="DOUBLE" property="clockLat"/>
 		<result column="clockAccuracy" jdbcType="INTEGER" property="clockAccuracy"/>
 		<result column="clockAddress" jdbcType="VARCHAR" property="clockAddress"/>
+		<result column="isCheck" jdbcType="INTEGER" property="isCheck"/>
+		<result column="isPermit" jdbcType="INTEGER" property="isPermit"/>
+		<result column="clockInImg" jdbcType="VARCHAR" property="clockInImg"/>
+		<result column="disposeTime" jdbcType="TIMESTAMP" property="disposeTime"/>
 	</resultMap>
 	<insert id="insert" parameterType="com.light.graduation.entity.StudentClockIn">
     insert into studentclockin (studentNumber, clockInTeacherNumber, 
@@ -65,6 +69,18 @@
 			<if test="clockAddress != null">
 				clockAddress,
 			</if>
+			<if test="isCheck != null">
+				isCheck,
+			</if>
+			<if test="isPermit != null">
+				isPermit,
+			</if>
+			<if test="clockInImg != null">
+				clockInImg,
+			</if>
+			<if test="disposeTime != null">
+				disposeTime,
+			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="studentNumber != null">
@@ -77,7 +93,7 @@
 				#{clockInProject,jdbcType=VARCHAR},
 			</if>
 			<if test="clockTime != null">
-				#{clockTime,jdbcType=VARCHAR},
+				#{clockTime,jdbcType=TIMESTAMP},
 			</if>
 			<if test="clockLocation != null">
 				#{clockLocation,jdbcType=VARCHAR},
@@ -103,11 +119,29 @@
 			<if test="clockAddress != null">
 				#{clockAddress,jdbcType=VARCHAR},
 			</if>
+			<if test="isCheck != null">
+				#{isCheck,jdbcType=INTEGER},
+			</if>
+			<if test="isPermit != null">
+				#{isPermit,jdbcType=INTEGER},
+			</if>
+			<if test="clockInImg != null">
+				#{clockInImg,jdbcType=VARCHAR},
+			</if>
+			<if test="disposeTime != null">
+				#{disposeTime,jdbcType=TIMESTAMP},
+			</if>
 		</trim>
 	</insert>
 	<update id="updateSelective" parameterType="com.light.graduation.entity.StudentClockIn">
 		update studentclockin
 		<set>
+			<if test="clockInProject != null">
+				clockInProject = #{clockInProject,jdbcType=VARCHAR},
+			</if>
+			<if test="clockInTeacherNumber != null">
+				clockInTeacherNumber = #{clockInTeacherNumber,jdbcType=VARCHAR},
+			</if>
 			<if test="clockState != null">
 				clockState = #{clockState,jdbcType=VARCHAR},
 			</if>
@@ -127,10 +161,81 @@
 				clockAccuracy = #{clockAccuracy,jdbcType=INTEGER},
 			</if>
 			<if test="clockAddress != null">
-				clockAddress = #{clockAddress,jdbcType=VARCHAR}
+				clockAddress = #{clockAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="isCheck != null">
+				isCheck = #{isCheck,jdbcType=INTEGER},
+			</if>
+			<if test="isPermit != null">
+				isPermit = #{isPermit,jdbcType=INTEGER},
+			</if>
+			<if test="certification != null">
+				certification = #{certification,jdbcType=VARCHAR},
+			</if>
+			<if test="clockInImg != null">
+				clockInImg = #{clockInImg,jdbcType=VARCHAR},
+			</if>
+			<if test="disposeTime != null">
+				disposeTime = #{disposeTime,jdbcType=TIMESTAMP},
 			</if>
 		</set>
 		where studentNumber = #{studentNumber,jdbcType=VARCHAR}
+		and clockTime = (
+		select clockTime
+		from (
+		select *
+		from studentclockin
+		where studentNumber = #{studentNumber,jdbcType=VARCHAR}
+		order by clockTime desc limit 1) as `l*`)
+	</update>
+	<update id="updateVacateSelective" parameterType="com.light.graduation.entity.StudentClockIn">
+		update studentclockin
+		<set>
+			<if test="clockInProject != null">
+				clockInProject = #{param1.clockInProject,jdbcType=VARCHAR},
+			</if>
+			<if test="clockInTeacherNumber != null">
+				clockInTeacherNumber = #{param1.clockInTeacherNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="clockState != null">
+				clockState = #{param1.clockState,jdbcType=VARCHAR},
+			</if>
+			<if test="errorReason != null">
+				errorReason = #{param1.errorReason,jdbcType=VARCHAR},
+			</if>
+			<if test="clockTime != null">
+				clockTime = #{param1.clockTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="clockLng != null">
+				clockLng = #{param1.clockLng,jdbcType=DOUBLE},
+			</if>
+			<if test="clockLat != null">
+				clockLat = #{param1.clockLat,jdbcType=DOUBLE},
+			</if>
+			<if test="clockAccuracy != null">
+				clockAccuracy = #{param1.clockAccuracy,jdbcType=INTEGER},
+			</if>
+			<if test="clockAddress != null">
+				clockAddress = #{param1.clockAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="isCheck != null">
+				isCheck = #{param1.isCheck,jdbcType=INTEGER},
+			</if>
+			<if test="isPermit != null">
+				isPermit = #{param1.isPermit,jdbcType=INTEGER},
+			</if>
+			<if test="certification != null">
+				certification = #{param1.certification,jdbcType=VARCHAR},
+			</if>
+			<if test="clockInImg != null">
+				clockInImg = #{param1.clockInImg,jdbcType=VARCHAR},
+			</if>
+			<if test="disposeTime != null">
+				disposeTime = #{disposeTime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where studentNumber = #{studentNumber,jdbcType=VARCHAR}
+		and clockTime = #{param2}
 	</update>
 	<select id="getStudentClockInformation"
 			resultType="com.light.graduation.dto.StudentClockInformationDTO">
@@ -138,6 +243,7 @@
 		from teacherinfo,studentclockin
 		where studentNumber = #{studentNumber,jdbcType=VARCHAR}
 		and clockInTeacherNumber = teacherinfo.teacherNumber
+		order by clockTime desc
 	</select>
 	<select id="getLastClockInformation" resultType="com.light.graduation.entity.StudentClockIn">
 		select *
@@ -149,5 +255,14 @@
 			      from studentclockin
 			      where studentNumber = #{studentNumber,jdbcType=VARCHAR}
 			      order by clockTime desc limit 1) as `l*`)
+	</select>
+	<select id="getCurrentTimeClockInformation" parameterType="com.light.graduation.pojo.CheckStudentClockSelectPojo" resultType="com.light.graduation.dto.CurrentTimeInformation">
+		select studentclockin.studentNumber,studentName,clockTime,clockState,errorReason
+		from studentinfo,studentclockin
+		where studentclockin.clockTime > #{param2}
+		and studentclockin.studentNumber = studentinfo.studentNumber
+		and studentclockin.clockInProject = #{param1.project,jdbcType=VARCHAR}
+		and studentclockin.clockInTeacherNumber = (select teacherNumber from teacherinfo where teacherName = #{param1.teacher,jdbcType=VARCHAR})
+		order by clockTime desc
 	</select>
 </mapper>

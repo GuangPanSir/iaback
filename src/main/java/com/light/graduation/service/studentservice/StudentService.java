@@ -1,6 +1,7 @@
 package com.light.graduation.service.studentservice;
 
 import com.light.graduation.dto.CheckLoginDTO;
+import com.light.graduation.dto.SearchStudentDto;
 import com.light.graduation.dto.StudentClockInformationDTO;
 import com.light.graduation.entity.Student;
 import com.light.graduation.entity.StudentClockIn;
@@ -13,13 +14,6 @@ import java.util.List;
  * @Date 2020/2/19 13:56
  */
 public interface StudentService {
-	/**
-	 * 根据学生编号获取该生相应的信息
-	 *
-	 * @param studentNumber 学生编号
-	 * @return 学生信息
-	 */
-	Student selectByPrimaryKey ( String studentNumber );
 	
 	/**
 	 * 获取所有学生的信息
@@ -75,6 +69,7 @@ public interface StudentService {
 	 * 1 执行插入
 	 * 2 之前就成功
 	 * 3 不做任何操作
+	 * 4 如果请假，不允许签到
 	 */
 	int checkStudentClock ( HttpSession session , String studentNumber );
 	
@@ -93,4 +88,27 @@ public interface StudentService {
 	 * @return 学生姓名
 	 */
 	String getStudentNameByStudentNumber ( String studentNumber );
+	
+	/**
+	 * 根据学生学号获取最近的一条签到记录
+	 *
+	 * @param studentNumber 学生学号
+	 * @return 学生签到记录
+	 */
+	StudentClockIn getLastClockInformation ( String studentNumber );
+	
+	/**
+	 * 学生请假是否更新
+	 * @param studentNumber 学生学号
+	 * @return 0 数据库中没有请假数据，执行插入操作
+	 * 			1 执行更新操作
+	 */
+	int checkStudentVacate ( String studentNumber );
+	
+	/**
+	 * 根据学生学号或学生姓名查询学生信息
+	 * @param studentNumber 学生学号或姓名
+	 * @return 学生信息
+	 */
+	SearchStudentDto searchStudent( String studentNumber);
 }

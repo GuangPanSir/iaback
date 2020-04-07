@@ -49,4 +49,10 @@ public interface ProjectService {
 	 */
 	LoginRecord getLastLoginRecord ( CheckStudentClockSelectPojo checkStudentClockSelectPojo );
 	
+	/**
+	 * 获取数据库中教师的最新一条的数据
+	 * @param teacherNumber 教师编号
+	 * @return 签到设置记录
+	 */
+	LoginRecord getTeacherLastLoginRecord ( String teacherNumber );
 }

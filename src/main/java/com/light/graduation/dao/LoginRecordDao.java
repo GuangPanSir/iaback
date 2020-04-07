@@ -38,4 +38,11 @@ public interface LoginRecordDao {
 	 * @return 数据库的影响条数
 	 */
 	int updateClockSettingSelective ( LoginRecord loginRecord );
+	
+	/**
+	 * 获取数据库中教师的最新一条的数据
+	 * @param teacherNumber 教师编号
+	 * @return 签到设置记录
+	 */
+	LoginRecord getTeacherLastLoginRecord ( String teacherNumber );
 }

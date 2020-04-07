@@ -13,9 +13,8 @@
 	<sql id="Base_Column_List">
    			studentNumber, studentPassword, studentSex, studentFaceImage, studentName, overdueTimes, absentTimes
   		</sql>
-	<select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-		select
-		<include refid="Base_Column_List"/>
+	<select id="selectStudentByStudentNumber" parameterType="java.lang.String" resultType="com.light.graduation.dto.SearchStudentDto">
+		select studentinfo.studentNumber,studentinfo.studentName,studentinfo.studentCollege,studentinfo.studentMajor,studentinfo.studentClass
 		from studentinfo
 		where studentNumber = #{studentNumber,jdbcType=VARCHAR}
 	</select>
@@ -39,6 +38,23 @@
 		select studentinfo.studentName
 		from studentinfo
 		where studentNumber = #{studentNumber,jdbcType=VARCHAR}
+	</select>
+	<select id="selectStudentByStudentName" resultType="com.light.graduation.dto.SearchStudentDto">
+		select studentinfo.studentNumber,studentinfo.studentName,studentinfo.studentCollege,studentinfo.studentMajor,studentinfo.studentClass
+		from studentinfo
+		where studentName = #{studentName,jdbcType=VARCHAR}
+	</select>
+	<select id="selectStudentInfoByStudentNumber" resultType="com.light.graduation.entity.Student">
+		select *
+		from studentinfo
+		where studentNumber = #{studentNumber,jdbcType=VARCHAR}
+	</select>
+	<select id="selectStudentByStudentNumberOrStudentName"
+			resultType="com.light.graduation.dto.SearchStudentDto">
+		select studentinfo.studentNumber,studentinfo.studentName,studentinfo.studentCollege,studentinfo.studentMajor,studentinfo.studentClass
+		from studentinfo
+		where studentName = #{studentName,jdbcType=VARCHAR}
+		or studentNumber = #{studentNumber,jdbcType=VARCHAR}
 	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     	delete from studentinfo

@@ -59,6 +59,7 @@ public class ImageConvertUtils {
 			out.write ( b );
 			out.flush ( );
 			out.close ( );
+			System.out.println ("生成成功" );
 			return true;
 		} catch ( Exception e ) {
 			return false;

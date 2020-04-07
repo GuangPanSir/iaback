@@ -65,4 +65,9 @@ public class ProjectServiceImpl implements ProjectService {
 			return null;
 		}
 	}
+	
+	@Override
+	public LoginRecord getTeacherLastLoginRecord ( String teacherNumber ) {
+		return this.loginRecordDao.getTeacherLastLoginRecord ( teacherNumber );
+	}
 }

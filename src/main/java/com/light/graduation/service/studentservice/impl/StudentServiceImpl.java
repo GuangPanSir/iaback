@@ -4,6 +4,7 @@ import com.light.graduation.dao.QuoteDao;
 import com.light.graduation.dao.StudentClockInDao;
 import com.light.graduation.dao.StudentDao;
 import com.light.graduation.dto.CheckLoginDTO;
+import com.light.graduation.dto.SearchStudentDto;
 import com.light.graduation.dto.StudentClockInformationDTO;
 import com.light.graduation.entity.Student;
 import com.light.graduation.entity.StudentClockIn;
@@ -37,11 +38,6 @@ public class StudentServiceImpl implements StudentService {
 		this.studentclockinDao = studentclockinDao;
 		this.quoteDao = quoteDao;
 		this.projectService = projectService;
-	}
-	
-	@Override
-	public Student selectByPrimaryKey ( String studentNumber ) {
-		return this.studentDao.selectByPrimaryKey ( studentNumber );
 	}
 	
 	@Override
@@ -83,12 +79,15 @@ public class StudentServiceImpl implements StudentService {
 		} else {
 			long localTime = System.currentTimeMillis ( );
 			long lastTime = middleStudentClockIn.getClockTime ( ).getTime ( );
-			if ( localTime - lastTime <= 1000 * 60 * 10 ) {
-				if ( "正常".equals ( middleStudentClockIn.getClockState ( ) ) ) {
+			if ( localTime - lastTime <= 1000 * 60 * 20 ) {
+				if ( middleStudentClockIn.getCertification () != null ){
+					System.out.println ("请假不允许签到" );
+					return 4;
+				}else if ( "正常".equals ( middleStudentClockIn.getClockState ( ) ) ) {
 					return 2;
 				} else if ( this.projectService.checkStudentClockSelect ( new CheckStudentClockSelectPojo ( ( String ) session.getAttribute ( "clockMajor" ) , ( String ) session.getAttribute ( "clockProject" ) , ( String ) session.getAttribute ( "clockTeacher" ) ) ) ) {
 					return 0;
-				} else {
+				} else{
 					return 3;
 				}
 			} else {
@@ -105,5 +104,37 @@ public class StudentServiceImpl implements StudentService {
 	@Override
 	public String getStudentNameByStudentNumber ( String studentNumber ) {
 		return this.studentDao.getStudentNameByStudentNumber ( studentNumber );
+	}
+	
+	@Override
+	public StudentClockIn getLastClockInformation ( String studentNumber ) {
+		return this.studentclockinDao.getLastClockInformation ( studentNumber );
+	}
+	
+	@Override
+	public int checkStudentVacate ( String studentNumber ) {
+		StudentClockIn studentClockIn = this.studentclockinDao.getLastClockInformation ( studentNumber );
+		if ( studentClockIn == null ) {
+			return 0;
+		} else {
+			long currentTime = System.currentTimeMillis ( );
+			long lastTime = studentClockIn.getClockTime ( ).getTime ( );
+			if ( currentTime - lastTime <= 1000 * 60 * 20 ) {
+				return 1;
+			} else {
+				return 0;
+			}
+		}
+	}
+	
+	@Override
+	public SearchStudentDto searchStudent ( String studentNumber ) {
+		SearchStudentDto student = new SearchStudentDto ( );
+		//根据学号查询的学生信息
+		SearchStudentDto student1 = this.studentDao.selectStudentByStudentNumber ( studentNumber );
+		if(student1 != null){
+			student = student1;
+		}
+		return student;
 	}
 }

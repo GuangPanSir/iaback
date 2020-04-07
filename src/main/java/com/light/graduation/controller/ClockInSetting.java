@@ -85,6 +85,8 @@ public class ClockInSetting {
 		teacherSetLastTime = new DateFormatUtil ( ).covertTime ( teacherSetLastTime );
 		
 		String teacherNumber = ( String ) session.getAttribute ( "userName" );
+		session.setAttribute ( "teacherMajor" , teacherClockSettingPojo.getMajor ( ) );
+		session.setAttribute ( "teacherProject" , teacherClockSettingPojo.getProject ( ) );
 		
 		LoginRecord loginRecord = new LoginRecord ( );
 		
@@ -99,6 +101,10 @@ public class ClockInSetting {
 		loginRecord.setClockInLat ( teacherClockSettingPojo.getLat ( ) );
 		loginRecord.setClockInAddress ( teacherClockSettingPojo.getAddress ( ) );
 		loginRecord.setClockInAccuracy ( teacherClockSettingPojo.getAccuracy ( ) );
+		loginRecord.setClockInNormal ( 0 );
+		loginRecord.setClockInAbnormal ( 0 );
+		loginRecord.setClockInOverdue ( 0 );
+		loginRecord.setClockInAbsent ( 0 );
 		
 		System.out.println ( "loginRecord:::::" + loginRecord.toString ( ) );
 		
