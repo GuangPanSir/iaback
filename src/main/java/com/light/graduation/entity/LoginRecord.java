@@ -71,4 +71,9 @@ public class LoginRecord implements Serializable {
 	 * 教师地理位置
 	 */
 	private String clockInAddress;
+	
+	/**
+	 * 是否添加缺勤学生
+	 */
+	private String isFinish;
 }

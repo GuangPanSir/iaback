@@ -1,6 +1,7 @@
 package com.light.graduation.controller;
 
 import com.light.graduation.dto.CheckFaceImageDTO;
+import com.light.graduation.entity.AttendanceStatistics;
 import com.light.graduation.entity.LoginRecord;
 import com.light.graduation.entity.Student;
 import com.light.graduation.entity.StudentClockIn;
@@ -51,6 +52,10 @@ public class FaceController {
 		this.faceService.updateStudentImage ( student );
 	}
 	
+	/**
+	 * 学生签到检测
+	 * 根据人脸及地理位置进行判断
+	 */
 	@PostMapping( value = "check" )
 	@ResponseBody
 	public Map< String, Object > faceCompare ( @NotNull @RequestBody CheckFaceImageDTO checkFaceImageDTO , @NotNull HttpSession session ) {
@@ -79,20 +84,25 @@ public class FaceController {
 		String clockMajor = ( String ) session.getAttribute ( "clockMajor" );
 		String clockTeacher = ( String ) session.getAttribute ( "clockTeacher" );
 		
+		String studentNumber = ( String ) session.getAttribute ( "userName" );
+		
 		studentClockIn.setClockInProject ( clockProject );
 		studentClockIn.setClockTime ( new Date ( ) );
 		studentClockIn.setClockInTeacherNumber ( this.teacherService.selectTeacherNumberByTeacherName ( clockTeacher ) );
-		studentClockIn.setStudentNumber ( ( String ) session.getAttribute ( "userName" ) );
+		studentClockIn.setStudentNumber ( studentNumber );
 		studentClockIn.setClockLng ( checkFaceImageDTO.getLng ( ) );
 		studentClockIn.setClockLat ( checkFaceImageDTO.getLat ( ) );
 		studentClockIn.setClockAddress ( checkFaceImageDTO.getAddress ( ) );
 		studentClockIn.setClockAccuracy ( checkFaceImageDTO.getAccuracy ( ) );
 		studentClockIn.setClockInImg ( checkFaceImageDTO.getImg ( ) );
+		studentClockIn.setClockInMajor ( clockMajor );
 		
 		int isStudentClockUpdate = this.studentService.checkStudentClock ( session , ( String ) session.getAttribute ( "userName" ) );
 		
-		
 		LoginRecord loginRecord = this.projectService.getLastLoginRecord ( new CheckStudentClockSelectPojo ( clockMajor , clockProject , clockTeacher ) );
+		
+		AttendanceStatistics attendanceStatistics = this.studentService.getStudentProjectClockDetail ( studentNumber, clockProject );
+		
 		System.out.println ( "isStudentClockUpdate" + isStudentClockUpdate );
 		//已经请假，无需签到
 		if ( isStudentClockUpdate == 4 ){
@@ -113,20 +123,20 @@ public class FaceController {
 				//师生实际相距多少米
 				double realDistance = DistanceUtil.getDistance ( teacherLng , teacherLat , studentLng , studentLat );
 				
-				System.out.println ( "realDistance" + realDistance + "   " + ( ( double ) ( teacherAccuracy + studentAccuracy ) / 2 + locationDifference ) );
-				
 				//判断学生与教师之间的距离是否在教师设置的物产范围内
 				//需要用上前端高德定位的精度范围值，因为会存在定位误差
 				if ( realDistance > ( ( double ) ( teacherAccuracy + studentAccuracy ) / 2 + locationDifference ) ) {
 					studentClockIn.setClockState ( "失败" );
 					studentClockIn.setErrorReason ( "位置不符" );
 					loginRecord.setClockInAbnormal ( loginRecord.getClockInAbnormal ( ) + 1 );
+					attendanceStatistics.setClockAbnormal ( attendanceStatistics.getClockAbnormal ( ) + 1 );
 				} else {
 					//迟到的状态
 					if ( System.currentTimeMillis ( ) > loginRecord.getClockInEndTime ( ).getTime ( ) && System.currentTimeMillis ( ) < loginRecord.getClockInAbsentTime ( ).getTime ( ) ) {
 						studentClockIn.setClockState ( "失败" );
 						studentClockIn.setErrorReason ( "迟到" );
 						loginRecord.setClockInOverdue ( loginRecord.getClockInOverdue ( ) + 1 );
+						attendanceStatistics.setClockOverdue ( attendanceStatistics.getClockOverdue ( ) + 1 );
 						map.put ( "late" , "迟到" );
 					} else {
 						//正常签到
@@ -134,6 +144,7 @@ public class FaceController {
 						studentClockIn.setClockState ( "正常" );
 						studentClockIn.setErrorReason ( "无" );
 						loginRecord.setClockInNormal ( loginRecord.getClockInNormal ( ) + 1 );
+						attendanceStatistics.setClockNormal ( attendanceStatistics.getClockNormal ( ) + 1 );
 					}
 				}
 			} else {
@@ -141,13 +152,16 @@ public class FaceController {
 				studentClockIn.setClockState ( "失败" );
 				studentClockIn.setErrorReason ( "人脸不符" );
 				loginRecord.setClockInAbnormal ( loginRecord.getClockInAbnormal ( ) + 1 );
+				attendanceStatistics.setClockAbnormal ( attendanceStatistics.getClockAbnormal ( ) + 1 );
 			}
+			
 			if ( isStudentClockUpdate == 0 ) {
 				//学生之前签到失败，重新进行签到操作
 				this.studentService.updateStudentClock ( session , studentClockIn );
 				//重新签到成功
 				if ( faceCompare ) {
 					loginRecord.setClockInAbnormal ( loginRecord.getClockInAbnormal ( ) - 1 );
+					attendanceStatistics.setClockAbnormal ( attendanceStatistics.getClockAbnormal ( ) - 1 );
 					this.teacherService.teacherClockUpdate ( loginRecord );
 				}
 			} else if ( isStudentClockUpdate == 1 ) {
@@ -158,6 +172,9 @@ public class FaceController {
 				//签到成功，重复签到
 				map.put ( "success" , "alreadySuccess" );
 			}
+			this.studentService.updateSelective ( attendanceStatistics );
+			attendanceStatistics = this.studentService.getStudentProjectClockDetail ( studentNumber, clockProject );
+			this.studentService.updateStudentClockScore ( attendanceStatistics );
 		}
 		return map;
 	}

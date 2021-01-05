@@ -15,7 +15,6 @@ import java.util.List;
 import static com.arcsoft.face.toolkit.ImageFactory.getGrayData;
 import static com.arcsoft.face.toolkit.ImageFactory.getRGBData;
 
-
 public class FaceTest {
 	
 	
@@ -66,7 +65,6 @@ public class FaceTest {
 			System.out.println ( "初始化引擎失败" );
 		}
 		
-		
 		//人脸检测
 		ImageInfo imageInfo = getRGBData ( new File ( "E:\\IACoding\\graduation\\src\\main\\resources\\img\\潘光健01.jpg" ) );
 		if ( imageInfo == null ) {
@@ -83,7 +81,7 @@ public class FaceTest {
 		//特征提取
 		FaceFeature faceFeature = new FaceFeature ( );
 		errorCode = faceEngine.extractFaceFeature ( imageInfo.getImageData ( ) , imageInfo.getWidth ( ) , imageInfo.getHeight ( ) , imageInfo.getImageFormat ( ) , faceInfoList.get ( 0 ) , faceFeature );
-		System.out.println ( "潘光健01特征值大小：" + faceFeature.getFeatureData ( ) );
+		System.out.println ( "潘光健01特征值大小：" + faceFeature.getFeatureData ( ).length );
 		
 		//人脸检测2
 		ImageInfo imageInfo2 = getRGBData ( new File ( "E:\\IACoding\\graduation\\src\\main\\resources\\img\\潘光健01.jpg" ) );

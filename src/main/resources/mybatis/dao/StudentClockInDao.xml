@@ -18,6 +18,7 @@
 		<result column="isPermit" jdbcType="INTEGER" property="isPermit"/>
 		<result column="clockInImg" jdbcType="VARCHAR" property="clockInImg"/>
 		<result column="disposeTime" jdbcType="TIMESTAMP" property="disposeTime"/>
+		<result column="clockInMajor" jdbcType="VARCHAR" property="clockInMajor"/>
 	</resultMap>
 	<insert id="insert" parameterType="com.light.graduation.entity.StudentClockIn">
     insert into studentclockin (studentNumber, clockInTeacherNumber, 
@@ -81,6 +82,9 @@
 			<if test="disposeTime != null">
 				disposeTime,
 			</if>
+			<if test="clockInMajor != null">
+				clockInMajor,
+			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="studentNumber != null">
@@ -131,7 +135,16 @@
 			<if test="disposeTime != null">
 				#{disposeTime,jdbcType=TIMESTAMP},
 			</if>
+			<if test="clockInMajor != null">
+				#{clockInMajor,jdbcType=VARCHAR},
+			</if>
 		</trim>
+	</insert>
+	<insert id="insertAbsentStudents" parameterType="java.util.List">
+		insert into studentclockin(studentNumber,clockInTeacherNumber,clockInProject,clockInMajor,clockTime,clockState,errorReason) values
+		<foreach collection="list" item="student" index="index" separator=",">
+			(#{student.studentNumber},#{student.clockInTeacherNumber},#{student.clockInProject},#{student.clockInMajor},#{student.clockTime},#{student.clockState},#{student.errorReason})
+		</foreach>
 	</insert>
 	<update id="updateSelective" parameterType="com.light.graduation.entity.StudentClockIn">
 		update studentclockin
@@ -255,14 +268,42 @@
 			      from studentclockin
 			      where studentNumber = #{studentNumber,jdbcType=VARCHAR}
 			      order by clockTime desc limit 1) as `l*`)
+		and studentNumber = #{studentNumber,jdbcType=VARCHAR}
 	</select>
-	<select id="getCurrentTimeClockInformation" parameterType="com.light.graduation.pojo.CheckStudentClockSelectPojo" resultType="com.light.graduation.dto.CurrentTimeInformation">
+	<select id="getCurrentTimeClockInformation" parameterType="com.light.graduation.pojo.CheckStudentClockSelectPojo"
+			resultType="com.light.graduation.dto.CurrentTimeInformation">
 		select studentclockin.studentNumber,studentName,clockTime,clockState,errorReason
 		from studentinfo,studentclockin
 		where studentclockin.clockTime > #{param2}
+		and studentclockin.clockTime &lt;= #{param3}
 		and studentclockin.studentNumber = studentinfo.studentNumber
 		and studentclockin.clockInProject = #{param1.project,jdbcType=VARCHAR}
 		and studentclockin.clockInTeacherNumber = (select teacherNumber from teacherinfo where teacherName = #{param1.teacher,jdbcType=VARCHAR})
 		order by clockTime desc
+	</select>
+	<select id="getStudentProjectClockIn" resultType="com.light.graduation.dto.CurrentTimeInformation">
+		select studentclockin.studentNumber,studentName,clockTime,clockState,errorReason
+		from studentclockin,studentinfo
+		where studentclockin.studentNumber = #{param1}
+		and clockInProject = #{param2}
+		and studentclockin.studentNumber = studentinfo.studentNumber
+	</select>
+	<select id="getProjectLastClockIn" resultType="com.light.graduation.entity.StudentClockIn">
+		select *
+		from studentclockin
+		where studentNumber = #{param1}
+		and clockTime = #{param2}
+	</select>
+	<select id="disposeAbsentStudents" resultType="java.lang.String">
+		select studentinfo.studentNumber
+		from studentinfo
+		left join studentclockin on studentclockin.studentNumber = studentinfo.studentNumber
+                                and studentclockin.clockInTeacherNumber=#{teacherNumber}
+                                and studentclockin.clockInMajor = #{clockInMajor}
+                                and studentclockin.clockInProject = #{clockInProject}
+                                and studentclockin.clockTime > #{clockInStartTime}
+                                and studentclockin.clockTime &lt; #{clockInAbsentTime}
+		where studentinfo.studentMajor=#{clockInMajor}
+		and studentclockin.studentNumber is null
 	</select>
 </mapper>

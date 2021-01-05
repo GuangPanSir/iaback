@@ -85,4 +85,9 @@ public class StudentClockIn implements Serializable {
 	 */
 	@JsonFormat( pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8" )
 	private Date disposeTime;
+	
+	/**
+	 * 签到专业
+	 */
+	private String clockInMajor;
 }

@@ -23,6 +23,9 @@ public class LoginController {
 	@Resource( name = "checkLoginFactory" )
 	private CheckLoginFactory checkLoginFactory;
 	
+	/**
+	 * 对用户登录进行检测
+	 */
 	@RequestMapping( value = "login" )
 	@ResponseBody
 	public HashMap checkLogin ( HttpSession session , @NotNull @RequestBody CheckLoginDTO checkLoginUser ) throws IllegalAccessException {

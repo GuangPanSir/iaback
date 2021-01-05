@@ -1,12 +1,16 @@
 package com.light.graduation.service.studentservice;
 
 import com.light.graduation.dto.CheckLoginDTO;
+import com.light.graduation.dto.CurrentTimeInformation;
 import com.light.graduation.dto.SearchStudentDto;
 import com.light.graduation.dto.StudentClockInformationDTO;
+import com.light.graduation.entity.AttendanceStatistics;
+import com.light.graduation.entity.MajorToTeacher;
 import com.light.graduation.entity.Student;
 import com.light.graduation.entity.StudentClockIn;
 
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -111,4 +115,94 @@ public interface StudentService {
 	 * @return 学生信息
 	 */
 	SearchStudentDto searchStudent( String studentNumber);
+	
+	/**
+	 * 根据学生学号获取该生的人脸信息
+	 *
+	 * @param studentNumber 学生学号
+	 * @return 学生的人脸信息
+	 */
+	String getStudentFaceImage ( String studentNumber );
+	
+	/**
+	 * 获取学生信息
+	 * @param studentNumber 学生学号
+	 * @return 学生信息
+	 */
+	Student getStudentInfo ( String studentNumber );
+	
+	/**
+	 *  获取学生是否为第一次登录
+	 * @param studentNumber 学生学号
+	 * @return 登录状态
+	 */
+	Integer getStudentIsFirstLogin ( String studentNumber );
+	
+	/**
+	 *  更新学生的人脸信息
+	 * @param studentNumber 学生学号
+	 * @param faceImg 人脸信息
+	 * @return 是否更新成功
+	 * 0 不存在人脸
+	 * 1 存在人脸
+	 */
+	int updateStudentFace ( String studentNumber,String faceImg );
+	
+	/**
+	 * 选择性地更新学生信息
+	 *
+	 * @param student 学生信息
+	 */
+	void updateStudentSelective ( Student student );
+	
+	/**
+	 * 根据学号获取学生的课程考勤信息
+	 *
+	 * @param studentNumber 学生学号
+	 * @param clockProject 考勤课程
+	 * @return 课程考勤信息
+	 */
+	AttendanceStatistics getStudentProjectClockDetail ( String studentNumber , String clockProject );
+	
+	/**
+	 * 添加学生的课程考勤信息
+	 * @param record 添加记录
+	 * @return 添加学生课程的考勤信息
+	 */
+	int insertSelective( AttendanceStatistics record);
+	
+	/**
+	 * 选择性地更新数据表中的内容
+	 * @param attendanceStatistics 考勤记录
+	 */
+	void updateSelective ( AttendanceStatistics attendanceStatistics );
+	
+	/**
+	 * 获取学生课程考勤的分数
+	 * @param attendanceStatistics 考勤记录单
+	 */
+	void updateStudentClockScore ( AttendanceStatistics attendanceStatistics );
+	
+	/**
+	 * 获取专业做学的所有课程
+	 * @param major 专业
+	 * @return 专业课程
+	 */
+	List< MajorToTeacher > getMajorProject ( String major );
+	
+	/**
+	 * 获取学生的指定课程的考勤记录
+	 * @param studentNumber 学生学号
+	 * @param project 考勤课程
+	 * @return 课程的考勤信息
+	 */
+	List< CurrentTimeInformation > getStudentProjectClockIn ( String studentNumber , String project );
+	
+	/**
+	 * 查询学生课程的最近一次的签到记录
+	 * @param studentNumber 学生学号
+	 * @param clockTime 签到时间
+	 * @return 学生签到记录
+	 */
+	StudentClockIn getProjectLastClockIn ( String studentNumber , Date clockTime );
 }

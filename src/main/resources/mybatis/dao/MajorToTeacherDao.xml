@@ -41,8 +41,10 @@
 		select distinct majortoteacher.teacherMajor from majortoteacher
 	</select>
 	<select id="getAllProjects" resultType="java.lang.String">
-		select majortoteacher.teacherProject from majortoteacher
+		select distinct majortoteacher.teacherProject
+		from majortoteacher
 		where teacherMajor = #{major,jdbcType=VARCHAR}
+		
 	</select>
 	<select id="getAllTeachers" resultType="java.lang.String">
 		select distinct teacherName

@@ -55,4 +55,12 @@ public interface ProjectService {
 	 * @return 签到设置记录
 	 */
 	LoginRecord getTeacherLastLoginRecord ( String teacherNumber );
+	
+	/**
+	 * 根据已给的专业和课程获取授课教师的姓名
+	 * @param teacherMajor 教师所教专业
+	 * @param teacherProject 教师所教课程
+	 * @return 获取教师名称
+	 */
+	List<String> getMajorToTeacher ( String teacherMajor , String teacherProject );
 }

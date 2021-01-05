@@ -2,6 +2,7 @@ package com.light.graduation.service.projectservice.impl;
 
 import com.light.graduation.dao.LoginRecordDao;
 import com.light.graduation.dao.MajorToTeacherDao;
+import com.light.graduation.dao.TeacherDao;
 import com.light.graduation.entity.LoginRecord;
 import com.light.graduation.pojo.CheckStudentClockSelectPojo;
 import com.light.graduation.service.projectservice.ProjectService;
@@ -18,11 +19,13 @@ import java.util.List;
 public class ProjectServiceImpl implements ProjectService {
 	private final MajorToTeacherDao majorToTeacherDao;
 	private final LoginRecordDao loginRecordDao;
+	private final TeacherDao teacherDao;
 	
 	@Contract( pure = true )
-	public ProjectServiceImpl ( MajorToTeacherDao majorToTeacherDao , LoginRecordDao loginRecordDao ) {
+	public ProjectServiceImpl ( MajorToTeacherDao majorToTeacherDao , LoginRecordDao loginRecordDao , TeacherDao teacherDao ) {
 		this.majorToTeacherDao = majorToTeacherDao;
 		this.loginRecordDao = loginRecordDao;
+		this.teacherDao = teacherDao;
 	}
 	
 	@Override
@@ -69,5 +72,10 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public LoginRecord getTeacherLastLoginRecord ( String teacherNumber ) {
 		return this.loginRecordDao.getTeacherLastLoginRecord ( teacherNumber );
+	}
+	
+	@Override
+	public List< String> getMajorToTeacher ( String teacherMajor , String teacherProject ) {
+		return this.teacherDao.getMajorToTeacher ( teacherMajor , teacherProject );
 	}
 }

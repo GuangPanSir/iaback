@@ -1,6 +1,7 @@
 package com.light.graduation.dao;
 
 import com.light.graduation.dto.SearchStudentDto;
+import com.light.graduation.entity.MajorToTeacher;
 import com.light.graduation.entity.Student;
 
 import java.util.List;
@@ -72,7 +73,7 @@ public interface StudentDao {
 	 * @param record 学生信息
 	 * @return 数据库的影响条数
 	 */
-	int updateByPrimaryKeySelective ( Student record );
+	int updateStudentSelective ( Student record );
 	
 	/**
 	 * 更新学生信息
@@ -120,4 +121,26 @@ public interface StudentDao {
 	 * @return 学生姓名
 	 */
 	String getStudentNameByStudentNumber ( String studentNumber );
+	
+	/**
+	 *  获取学生是否为第一次登录
+	 * @param studentNumber 学生学号
+	 * @return 登录状态
+	 */
+	Integer getStudentIsFirstLogin ( String studentNumber );
+	
+	/**
+	 *  更新学生的人脸信息
+	 * @param studentNumber 学生学号
+	 * @param faceImg 人脸信息
+	 * @return 数据库影响条数
+	 */
+	int updateStudentFace ( String studentNumber,String faceImg );
+	
+	/**
+	 * 获取专业做学的所有课程
+	 * @param major 专业
+	 * @return 专业课程
+	 */
+	List< MajorToTeacher > getMajorProject ( String major );
 }

@@ -1,6 +1,7 @@
 package com.light.graduation.strategy.login;
 
 import com.light.graduation.dto.CheckLoginDTO;
+import com.light.graduation.redis.SaveUserToRedis;
 import com.light.graduation.service.studentservice.StudentService;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -50,6 +51,9 @@ public class StudentLogin implements CheckLogin {
 		
 		HashMap< String, Object > map = new HashMap<> ( 15 );
 		
+		//学生是否上传人脸信息
+//		Integer isHaveFace = this.studentService.getStudentIsFirstLogin ( user );
+		
 		//eliminate mana
 		String password = "userPassword";
 		
@@ -61,10 +65,17 @@ public class StudentLogin implements CheckLogin {
 			//match users from cache
 			if ( redisMap.get ( password ).equals ( checkLoginUser.getUserPassword ( ) ) ) {
 				checkLogin = true;
+				if ( "0".equals ( redisMap.get ( "isFirstLogin" ) ) ) {
+					map.put ( "isFirstLogin" , 0 );
+				}else{
+					map.put ( "isFirstLogin" , 1 );
+				}
 			}
 		} else {
 			//Does not exist in cache, query from hard disk
 			checkLogin = this.studentService.checkStudentLogin ( checkLoginUser );
+			//第一次登陆，人脸信息为空
+			map.put ( "isFirstLogin" , 1 );
 		}
 		
 		/*if ( checkLogin && redisMap.size () == 0 ) {

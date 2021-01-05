@@ -3,6 +3,31 @@
   <component name="PersistentConfig">
     <option name="historyConfigList">
       <map>
+        <entry key="AttendanceStatistics">
+          <value>
+            <Config>
+              <option name="comment" value="true" />
+              <option name="daoMvnPath" value="src/main/java" />
+              <option name="daoName" value="AttendancestatisticsDao" />
+              <option name="daoPackage" value="com.light.graduation.dao" />
+              <option name="daoPostfix" value="Dao" />
+              <option name="modelMvnPath" value="src/main/java" />
+              <option name="modelName" value="Attendancestatistics" />
+              <option name="modelPackage" value="com.light.graduation.entity" />
+              <option name="name" value="AttendanceStatistics" />
+              <option name="overrideJava" value="true" />
+              <option name="overrideXML" value="true" />
+              <option name="primaryKey" value="studentNumber" />
+              <option name="projectFolder" value="$PROJECT_DIR$" />
+              <option name="tableName" value="AttendanceStatistics" />
+              <option name="useActualColumnNames" value="true" />
+              <option name="useLombokPlugin" value="true" />
+              <option name="useSchemaPrefix" value="true" />
+              <option name="xmlMvnPath" value="src/main/resources" />
+              <option name="xmlPackage" value="dao" />
+            </Config>
+          </value>
+        </entry>
         <entry key="MajorToTeacher">
           <value>
             <Config>
@@ -20,6 +45,31 @@
               <option name="primaryKey" value="" />
               <option name="projectFolder" value="$PROJECT_DIR$" />
               <option name="tableName" value="MajorToTeacher" />
+              <option name="useActualColumnNames" value="true" />
+              <option name="useLombokPlugin" value="true" />
+              <option name="useSchemaPrefix" value="true" />
+              <option name="xmlMvnPath" value="src/main/resources/mybatis" />
+              <option name="xmlPackage" value="dao" />
+            </Config>
+          </value>
+        </entry>
+        <entry key="attendancestatistics">
+          <value>
+            <Config>
+              <option name="comment" value="true" />
+              <option name="daoMvnPath" value="src/main/java" />
+              <option name="daoName" value="AttendancestatisticsDao" />
+              <option name="daoPackage" value="com.light.graduation.dao" />
+              <option name="daoPostfix" value="Dao" />
+              <option name="modelMvnPath" value="src/main/java" />
+              <option name="modelName" value="Attendancestatistics" />
+              <option name="modelPackage" value="com.light.graduation.entity" />
+              <option name="name" value="attendancestatistics" />
+              <option name="overrideJava" value="true" />
+              <option name="overrideXML" value="true" />
+              <option name="primaryKey" value="studentNumber" />
+              <option name="projectFolder" value="$PROJECT_DIR$" />
+              <option name="tableName" value="attendancestatistics" />
               <option name="useActualColumnNames" value="true" />
               <option name="useLombokPlugin" value="true" />
               <option name="useSchemaPrefix" value="true" />

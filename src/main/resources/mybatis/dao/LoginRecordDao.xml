@@ -17,6 +17,7 @@
 		<result column="clockInLat" jdbcType="DOUBLE" property="clockInLat"/>
 		<result column="clockInAccuracy" jdbcType="INTEGER" property="clockInAccuracy"/>
 		<result column="clockInAddress" jdbcType="VARCHAR" property="clockInAddress"/>
+		<result column="isFinish" jdbcType="VARCHAR" property="isFinish"/>
 	</resultMap>
 	<insert id="insert" parameterType="com.light.graduation.entity.LoginRecord">
     insert into loginrecord (teacherNumber, clockInMajor, clockInStartTime,
@@ -78,6 +79,9 @@
 			<if test="clockInAddress != null">
 				clockInAddress,
 			</if>
+			<if test="isFinish != null">
+				isFinish,
+			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="teacherNumber != null">
@@ -125,6 +129,9 @@
 			<if test="clockInAddress != null">
 				#{clockInAddress,jdbcType=VARCHAR},
 			</if>
+			<if test="isFinish != null">
+				#{isFinish,jdbcType=VARCHAR},
+			</if>
 		</trim>
 	</insert>
 	<update id="updateClockSettingSelective" parameterType="com.light.graduation.entity.LoginRecord">
@@ -170,7 +177,10 @@
 				clockInAccuracy = #{clockInAccuracy,jdbcType=INTEGER},
 			</if>
 			<if test="clockInAddress != null">
-				clockInAddress = #{clockInAddress,jdbcType=VARCHAR}
+				clockInAddress = #{clockInAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="isFinish != null">
+				isFinish = #{isFinish,jdbcType=VARCHAR}
 			</if>
 		</set>
 		where clockInStartTime = (
@@ -195,5 +205,10 @@
 		from loginrecord
 		where teacherNumber = #{teacherNumber}
 		order by clockInStartTime desc limit 1;
+	</select>
+	<select id="getLoginRecordByStartTime" resultType="com.light.graduation.entity.LoginRecord">
+		select *
+		from loginrecord
+		where clockInStartTime = #{startTime};
 	</select>
 </mapper>

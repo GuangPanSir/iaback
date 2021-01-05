@@ -2,12 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.light.graduation.dao.TeacherDao">
 	<resultMap id="BaseResultMap" type="com.light.graduation.entity.Teacher">
-		<id column="teacherNumber" jdbcType="VARCHAR" property="teachernumber"/>
-		<result column="teacherPassword" jdbcType="VARCHAR" property="teacherpassword"/>
-		<result column="teacherName" jdbcType="VARCHAR" property="teachername"/>
-		<result column="teacherSex" jdbcType="VARCHAR" property="teachersex"/>
-		<result column="teacherContact" jdbcType="VARCHAR" property="teachercontact"/>
-		<result column="teacherEMail" jdbcType="VARCHAR" property="teacheremail"/>
+		<id column="teacherNumber" jdbcType="VARCHAR" property="teacherNumber"/>
+		<result column="teacherPassword" jdbcType="VARCHAR" property="teacherPassword"/>
+		<result column="teacherName" jdbcType="VARCHAR" property="teacherName"/>
+		<result column="teacherSex" jdbcType="VARCHAR" property="teacherSex"/>
+		<result column="teacherContact" jdbcType="VARCHAR" property="teacherContact"/>
+		<result column="teacherEMail" jdbcType="VARCHAR" property="teacherEmail"/>
 	</resultMap>
 	<sql id="Base_Column_List">
     	teacherNumber, teacherPassword, teacherName, teacherSex, teacherContact, teacherEMail
@@ -16,11 +16,11 @@
 		select
 		<include refid="Base_Column_List"/>
 		from teacherinfo
-		where teacherNumber = #{teachernumber,jdbcType=VARCHAR}
+		where teacherNumber = #{teacherNumber,jdbcType=VARCHAR}
 	</select>
 	<select id="getTeacherPassword" resultType="java.lang.String">
 		select teacherinfo.teacherPassword from teacherinfo
-		where teacherNumber = #{teachernumber,jdbcType=VARCHAR}
+		where teacherNumber = #{teacherNumber,jdbcType=VARCHAR}
 	</select>
 	<select id="selectTeacherNumberByTeacherName" resultType="java.lang.String">
 		select teacherinfo.teacherNumber
@@ -30,85 +30,113 @@
 	<select id="queryTeacherNameByTeacherNumber" resultType="java.lang.String">
 		select teacherinfo.teacherName
 		from teacherinfo
-		where teacherNumber = #{teachernumber,jdbcType=VARCHAR}
+		where teacherNumber = #{teacherNumber,jdbcType=VARCHAR}
+	</select>
+	<select id="getTeacherProjects" resultType="com.light.graduation.pojo.GetTeacherProjects">
+		select majortoteacher.teacherMajor,majortoteacher.teacherProject
+		from majortoteacher
+		where teacherNumber = #{teacherNumber,jdbcType=VARCHAR}
+	</select>
+	<select id="getTeacherLoginRecord" resultType="com.light.graduation.entity.LoginRecord">
+		select *
+		from loginrecord
+		where clockInMajor = #{teacherMajor,jdbcType=VARCHAR}
+		and clockInProject = #{teacherProject,jdbcType=VARCHAR}
+		and teacherNumber = #{teacherNumber,jdbcType=VARCHAR}
+	</select>
+	<select id="getMajorToTeacher" resultType="java.lang.String">
+		select teacherName
+		from majortoteacher,teacherinfo
+		where majortoteacher.teacherProject = #{param2}
+		and majortoteacher.teacherMajor = #{param1}
+		and majortoteacher.teacherNumber = teacherinfo.teacherNumber
+	</select>
+	<select id="getProjectClockDetail" resultType="com.light.graduation.dto.CurrentTimeInformation">
+		select studentinfo.studentNumber,studentName,studentclockin.clockInProject,clockTime,errorReason,clockState
+		from studentclockin,studentinfo
+		where clockInTeacherNumber = #{teacherNumber}
+		and clockInProject = #{clockInProject}
+		and clockTime &lt;= #{clockInAbsentTime}
+		and clockTime &gt; #{clockInStartTime}
+		and studentclockin.studentNumber = studentinfo.studentNumber
 	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     	delete from teacherinfo
-    	where teacherNumber = #{teachernumber,jdbcType=VARCHAR}
+    	where teacherNumber = #{teacherNumber,jdbcType=VARCHAR}
   	</delete>
-	<insert id="insert" keyColumn="teacherNumber" keyProperty="teachernumber"
+	<insert id="insert" keyColumn="teacherNumber" keyProperty="teacherNumber"
 			parameterType="com.light.graduation.entity.Teacher" useGeneratedKeys="true">
     	insert into teacherinfo (teacherPassword, teacherName, teacherSex,
       		teacherContact, teacherEMail)
-    	values (#{teacherpassword,jdbcType=VARCHAR}, #{teachername,jdbcType=VARCHAR}, #{teachersex,jdbcType=VARCHAR},
-      	#{teachercontact,jdbcType=VARCHAR}, #{teacheremail,jdbcType=VARCHAR})
+    	values (#{teacherPassword,jdbcType=VARCHAR}, #{teacherName,jdbcType=VARCHAR}, #{teacherSex,jdbcType=VARCHAR},
+      	#{teacherContact,jdbcType=VARCHAR}, #{teacherEmail,jdbcType=VARCHAR})
   	</insert>
-	<insert id="insertSelective" keyColumn="teacherNumber" keyProperty="teachernumber"
+	<insert id="insertSelective" keyColumn="teacherNumber" keyProperty="teacherNumber"
 			parameterType="com.light.graduation.entity.Teacher" useGeneratedKeys="true">
 		insert into teacherinfo
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="teacherpassword != null">
+			<if test="teacherPassword != null">
 				teacherPassword,
 			</if>
-			<if test="teachername != null">
+			<if test="teacherName != null">
 				teacherName,
 			</if>
-			<if test="teachersex != null">
+			<if test="teacherSex != null">
 				teacherSex,
 			</if>
-			<if test="teachercontact != null">
+			<if test="teacherContact != null">
 				teacherContact,
 			</if>
-			<if test="teacheremail != null">
+			<if test="teacherEmail != null">
 				teacherEMail,
 			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="teacherpassword != null">
-				#{teacherpassword,jdbcType=VARCHAR},
+			<if test="teacherPassword != null">
+				#{teacherPassword,jdbcType=VARCHAR},
 			</if>
-			<if test="teachername != null">
-				#{teachername,jdbcType=VARCHAR},
+			<if test="teacherName != null">
+				#{teacherName,jdbcType=VARCHAR},
 			</if>
-			<if test="teachersex != null">
-				#{teachersex,jdbcType=VARCHAR},
+			<if test="teacherSex != null">
+				#{teacherSex,jdbcType=VARCHAR},
 			</if>
-			<if test="teachercontact != null">
-				#{teachercontact,jdbcType=VARCHAR},
+			<if test="teacherContact != null">
+				#{teacherContact,jdbcType=VARCHAR},
 			</if>
-			<if test="teacheremail != null">
-				#{teacheremail,jdbcType=VARCHAR},
+			<if test="teacherEmail != null">
+				#{teacherEmail,jdbcType=VARCHAR},
 			</if>
 		</trim>
 	</insert>
-	<update id="updateByPrimaryKeySelective" parameterType="com.light.graduation.entity.Teacher">
+	<update id="updateTeacherSelective" parameterType="com.light.graduation.entity.Teacher">
 		update teacherinfo
 		<set>
-			<if test="teacherpassword != null">
-				teacherPassword = #{teacherpassword,jdbcType=VARCHAR},
+			<if test="teacherPassword != null">
+				teacherPassword = #{teacherPassword,jdbcType=VARCHAR},
 			</if>
-			<if test="teachername != null">
-				teacherName = #{teachername,jdbcType=VARCHAR},
+			<if test="teacherName != null">
+				teacherName = #{teacherName,jdbcType=VARCHAR},
 			</if>
-			<if test="teachersex != null">
-				teacherSex = #{teachersex,jdbcType=VARCHAR},
+			<if test="teacherSex != null">
+				teacherSex = #{teacherSex,jdbcType=VARCHAR},
 			</if>
-			<if test="teachercontact != null">
-				teacherContact = #{teachercontact,jdbcType=VARCHAR},
+			<if test="teacherContact != null">
+				teacherContact = #{teacherContact,jdbcType=VARCHAR},
 			</if>
-			<if test="teacheremail != null">
-				teacherEMail = #{teacheremail,jdbcType=VARCHAR},
+			<if test="teacherEmail != null">
+				teacherEMail = #{teacherEmail,jdbcType=VARCHAR},
 			</if>
 		</set>
-		where teacherNumber = #{teachernumber,jdbcType=VARCHAR}
+		where teacherNumber = #{teacherNumber,jdbcType=VARCHAR}
 	</update>
-	<update id="updateByPrimaryKey" parameterType="com.light.graduation.entity.Teacher">
+	<update id="updateTeacher" parameterType="com.light.graduation.entity.Teacher">
     update teacherinfo
-    set teacherPassword = #{teacherpassword,jdbcType=VARCHAR},
-      	teacherName = #{teachername,jdbcType=VARCHAR},
-      	teacherSex = #{teachersex,jdbcType=VARCHAR},
-      	teacherContact = #{teachercontact,jdbcType=VARCHAR},
-      	teacherEMail = #{teacheremail,jdbcType=VARCHAR}
-    where teacherNumber = #{teachernumber,jdbcType=VARCHAR}
+    set teacherPassword = #{teacherPassword,jdbcType=VARCHAR},
+      	teacherName = #{teacherName,jdbcType=VARCHAR},
+      	teacherSex = #{teacherSex,jdbcType=VARCHAR},
+      	teacherContact = #{teacherContact,jdbcType=VARCHAR},
+      	teacherEMail = #{teacherEmail,jdbcType=VARCHAR}
+    where teacherNumber = #{teacherNumber,jdbcType=VARCHAR}
   </update>
 </mapper>

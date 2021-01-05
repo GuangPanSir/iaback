@@ -41,6 +41,7 @@ public class FaceServiceImpl implements FaceService {
 	 * 人脸信息
 	 */
 	public FaceFeature faceFeature = new FaceFeature ( );
+	
 	private StudentDao studentDao;
 	/**
 	 * 获取人脸识别引擎
@@ -144,7 +145,7 @@ public class FaceServiceImpl implements FaceService {
 	
 	@Override
 	public void updateStudentImage ( Student student ) {
-		this.studentDao.updateByPrimaryKeySelective ( student );
+		this.studentDao.updateStudentSelective ( student );
 	}
 	
 	@Override

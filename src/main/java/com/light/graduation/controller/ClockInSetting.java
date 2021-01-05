@@ -10,10 +10,9 @@ import com.light.graduation.utils.DateFormatUtil;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.util.Date;
@@ -28,21 +27,27 @@ import java.util.Map;
 @Controller
 @RequestMapping( "clock" )
 public class ClockInSetting {
-	private final ProjectService projectService;
+	@Resource(name = "projectServiceImpl")
+	private ProjectService projectService;
 	private final TeacherService teacherService;
 	
 	@Contract( pure = true )
-	public ClockInSetting ( ProjectService projectService , TeacherService teacherService ) {
-		this.projectService = projectService;
+	public ClockInSetting (TeacherService teacherService ) {
 		this.teacherService = teacherService;
 	}
 	
+	/**
+	 * 获取所有专业
+	 */
 	@RequestMapping( "clockSelect/major" )
 	@ResponseBody
 	public List< String > getAllMajors ( ) {
 		return this.projectService.getAllMajors ( );
 	}
 	
+	/**
+	 * 获取专业的所有课程
+	 */
 	@RequestMapping( "clockSelect/project" )
 	@ResponseBody
 	public List< String > getAllProjects ( @RequestBody StringDTO major ) {
@@ -50,11 +55,14 @@ public class ClockInSetting {
 		return this.projectService.getAllProjects ( major.getData ( ) );
 	}
 	
+	/**
+	 * 获取课程的授课教师
+	 */
 	@RequestMapping( "clockSelect/teacher" )
 	@ResponseBody
-	public List< String > getAllTeachers ( @RequestBody StringDTO project ) {
-		System.out.println ( project );
-		return this.projectService.getAllTeachers ( project.getData ( ) );
+	public List< String > getAllTeachers ( @RequestParam("teacherMajor") String teacherMajor,@RequestParam("teacherProject") String teacherProject ) {
+		System.out.println ( teacherMajor +"  "+teacherProject );
+		return this.projectService.getMajorToTeacher ( teacherMajor , teacherProject );
 	}
 	
 	/**

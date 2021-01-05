@@ -3,6 +3,8 @@ package com.light.graduation.dao;
 import com.light.graduation.entity.LoginRecord;
 import com.light.graduation.pojo.CheckStudentClockSelectPojo;
 
+import java.util.Date;
+
 /**
  * @author Light
  */
@@ -45,4 +47,11 @@ public interface LoginRecordDao {
 	 * @return 签到设置记录
 	 */
 	LoginRecord getTeacherLastLoginRecord ( String teacherNumber );
+	
+	/**
+	 * 根据考勤记录时间获取考勤记录
+	 * @param startTime 开始时间
+	 * @return 对应时间的考勤记录
+	 */
+	LoginRecord getLoginRecordByStartTime ( Date startTime );
 }

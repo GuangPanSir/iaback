@@ -13,6 +13,7 @@ class SaveToSession {
 	static void saveToSession ( @NotNull HttpSession session , @NotNull CheckLoginDTO checkLoginUser ) {
 		//user information saved to session
 		session.setAttribute ( "userName" , checkLoginUser.getUserName ( ) );
+		session.setAttribute ( "identity" , checkLoginUser.getIdentity ( ) );
 		//setting the session life cycle
 		session.setMaxInactiveInterval ( 60 * 60 * 3 );
 	}

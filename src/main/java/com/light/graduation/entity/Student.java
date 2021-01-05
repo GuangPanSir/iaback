@@ -58,4 +58,9 @@ public class Student implements Serializable {
 	 * 学生邮箱
 	 */
 	private String studentEMail;
+	
+	/**
+	 * 用户是否为第一次登录
+	 */
+	private Integer isFirstLogin;
 }

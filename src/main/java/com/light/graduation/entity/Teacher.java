@@ -13,25 +13,25 @@ public class Teacher implements Serializable {
 	/**
 	 * 教师工号
 	 */
-	private String teachernumber;
+	private String teacherNumber;
 	/**
 	 * 教师登录密码
 	 */
-	private String teacherpassword;
+	private String teacherPassword;
 	/**
 	 * 教师姓名
 	 */
-	private String teachername;
+	private String teacherName;
 	/**
 	 * 教师性别
 	 */
-	private String teachersex;
+	private String teacherSex;
 	/**
 	 * 教师联系方式
 	 */
-	private String teachercontact;
+	private String teacherContact;
 	/**
 	 * 教师邮箱
 	 */
-	private String teacheremail;
+	private String teacherEmail;
 }
